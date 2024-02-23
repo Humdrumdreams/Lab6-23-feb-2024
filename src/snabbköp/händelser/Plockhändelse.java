@@ -1,6 +1,8 @@
-/**
- * @author Ludvig Lidén, Botan Guzel, Sergij Wennström
- */
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package snabbköp.händelser;
 
 import generellSim.Event;
@@ -18,32 +20,20 @@ public class Plockhändelse extends Event {
         this.kund = kund;
     }
 
-    @Override
     public void executeEvent() {
-        // Logik för plockhändelse
-         //Skapa nytt kundID
-    	System.out.println("Kund " + kund.getKundID() + " har plockat sina varor vid tid " + getTimeOfEvent());
-
-        if (tillstånd.getAntalLedigaKassor() > 0) {
-            // Om det finns lediga kassor, gå till en av dem för betalning
-            tillstånd.minskaAntalLedigaKassor(); // Minska antalet lediga kassor
-            double betalningTid = tillstånd.getNästaBetalningsTid(getTimeOfEvent()); // Hämta betalningstiden
-            eQ.addEvent(new Betalningshändelse(tillstånd, eQ, getTimeOfEvent() + betalningTid, kund)); // Skapa en betalningshändelse
+        System.out.println("Kund " + this.kund.getKundID() + " har plockat sina varor vid tid " + this.getTimeOfEvent());
+        if (this.tillstånd.getAntalLedigaKassor() > 0) {
+            this.tillstånd.minskaAntalLedigaKassor();
+            double betalningTid = this.tillstånd.getNästaBetalningsTid(this.getTimeOfEvent());
+            this.eQ.addEvent(new Betalningshändelse(this.tillstånd, this.eQ, this.getTimeOfEvent() + betalningTid, this.kund));
         } else {
-            // Annars ställs kunden i kassakön
-            System.out.println("Kund " + kund.getKundID() + " ställs i kassakön");
-            //tillstånd.getKassaKö().läggTillIKö(kund.getKundID()); Kod från inann
-            tillstånd.getKassaKö().läggTillIKö(kund);
-  
-
+            System.out.println("Kund " + this.kund.getKundID() + " ställs i kassakön");
+            this.tillstånd.getKassaKö().läggTillIKö(this.kund);
         }
+
     }
 
-    @Override
     public String getName() {
         return "Plock";
     }
 }
-
-
-

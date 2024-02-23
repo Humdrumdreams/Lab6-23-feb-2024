@@ -1,48 +1,44 @@
-/**
- * @author Ludvig Lidén, Botan Guzel, Sergij Wennström
- */
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package generellSim;
 
 import java.util.Observable;
 
 public abstract class SimState extends Observable {
-    
-    private boolean simulationRunning = false; // Spårar om simuleringen är igång
-    private double time = 0; // Den simulerade tiden
-    
-    // Konstruktorn behöver inte sätta simuleringen som startad från början
+    private boolean simulationRunning = false;
+    private double time = 0.0;
+
     public SimState() {
     }
-    
-    // Startar simuleringen
+
     public void startSimulation() {
-        simulationRunning = true;
-        notifyObservers(); // Notifiera observatörer om ändring
+        this.simulationRunning = true;
+        this.notifyObservers();
     }
-    
-    // Stoppar simuleringen
+
     public void stopSimulation() {
         this.simulationRunning = false;
-        notifyObservers(); // Notifiera observatörer om ändring
+        this.notifyObservers();
     }
-    
-    // Kontrollerar om simuleringen är igång
+
     public boolean simulationRunning() {
-        return simulationRunning;
+        return this.simulationRunning;
     }
-    
+
     public double getTime() {
-        return time;
+        return this.time;
     }
-    
+
     public void setTime(double time) {
         this.time = time;
     }
-    
-    // Uppdaterar tillståndet baserat på en händelse
+
     public void update(Event e) {
-        this.time = e.getTimeOfEvent(); // Sätt den simulerade tiden till händelsens tid
-        setChanged(); // Markera att tillståndet har ändrats
-        notifyObservers(); // Notifiera alla observatörer om ändringen
+        this.time = e.getTimeOfEvent();
+        this.setChanged();
+        this.notifyObservers();
     }
 }

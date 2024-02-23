@@ -1,118 +1,44 @@
-
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
 package snabbköp;
 
-import java.util.Observable;
-
 import generellSim.Event;
 import generellSim.SimView;
-import snabbköp.händelser.*;
+import java.util.Observable;
+import snabbköp.händelser.Starthändelse;
+import snabbköp.händelser.Stophändelse;
 
-@SuppressWarnings("deprecation")
 public class SnabbköpVy extends SimView {
     private SnabbköpTillstånd tillstånd;
 
     public SnabbköpVy(SnabbköpTillstånd tillstånd) {
-        super();
         this.tillstånd = tillstånd;
     }
 
-    @Override
     public void update(Observable o, Object arg) {
-        // Anta att 'arg' är en instans av en händelse
-        Event event = (Event) arg;
-        
-        // Visa allmänna parametrar endast en gång, t.ex. vid start
+        Event event = (Event)arg;
         if (event instanceof Starthändelse) {
-            // Visa simuleringens initiala parametrar
-        	visaParametrar();
+            this.visaParametrar();
         }
-        
-        
-        //visaHändelse (event);
-        
 
         if (event instanceof Stophändelse) {
-        	visaResultat();
+            this.visaResultat();
         }
+
     }
-    
-    
+
     private void visaRubriker() {
         System.out.println("\tTid \tHändelse \tKund \t? \tled \tledT \tI \t$ \t:-( \tköat \tköT \tköar \t[Kassakö..]");
     }
 
-
     private void visaParametrar() {
-        System.out.println(String.format("""
-            PARAMETRAR
-            ==========
-            Antal kassor, N..........: %d
-            Max som ryms, M..........: %d
-            Ankomshastighet, lambda..: %.2f
-            Plocktider, [P_min..Pmax]: [%.2f..%.2f]
-            Betaltider, [K_min..Kmax]: [%.2f..%.2f]
-            Frö, f...................: %d
-            FÖRLOPP
-            =======""",
-            tillstånd.getMaxAntalKassor(),
-            tillstånd.getMaxAntalKunder(),
-            tillstånd.getAnkomstRate(),
-            tillstånd.getMinPlockTid(),
-            tillstånd.getMaxPlockTid(),
-            tillstånd.getMinKassaTid(),
-            tillstånd.getMaxKassaTid(),
-            tillstånd.getFrö()
-        ));
+        System.out.println(String.format("PARAMETRAR\n==========\nAntal kassor, N..........: %d\nMax som ryms, M..........: %d\nAnkomshastighet, lambda..: %.2f\nPlocktider, [P_min..Pmax]: [%.2f..%.2f]\nBetaltider, [K_min..Kmax]: [%.2f..%.2f]\nFrö, f...................: %d\nFÖRLOPP\n=======", this.tillstånd.getMaxAntalKassor(), this.tillstånd.getMaxAntalKunder(), this.tillstånd.getAnkomstRate(), this.tillstånd.getMinPlockTid(), this.tillstånd.getMaxPlockTid(), this.tillstånd.getMinKassaTid(), this.tillstånd.getMaxKassaTid(), this.tillstånd.getFrö()));
     }
-    
-    /**
-    private void visaHändelse(Event event) {
-        // Exempel på hur man kan formatera utskriften för varje händelse
-        System.out.println(String.format(
-            "\t%.2f \t%s \t%s \t%s \t%d \t%.2f \t%d \t%d \t%d \t%d \t%.2f \t%s",
-            tillstånd.getTime(), // Tid för händelsen
-            event.getClass().getSimpleName(), // Händelsetyp
-            //(event instanceof Ankomsthändelse) ? String.valueOf(((Ankomsthändelse)event).getKundID()) : "-", // KundID om tillgängligt
-            tillstånd.ärSnabbköpÖppet() ? "Ö" : "S", // Om snabbköpet är öppet eller stängt
-            tillstånd.getAntalLedigaKassor(), // Antal lediga kassor
-            tillstånd.getTotalTidLedigaKassor(), // Total tid kassor varit lediga
-            tillstånd.getKundIDRäknare(), // Antal kunder som hanterats
-            tillstånd.getTotaltAntalKunderSomFörsöktHandlat(), // Totalt antal kunder som försökt handla
-            tillstånd.getTotaltAntalBetaldaKunder(), // Totalt antal kunder som betalat
-            tillstånd.getTotaltAntalMissadeKunder(), // Totalt antal missade kunder
-            tillstånd.getTotalTidIKassaKö(), // Total tid i kassakö
-            //tillstånd.getKassaKö() // Visar kassakön
-        ));
-    }
-    */
-    
 
     private void visaResultat() {
-        // Notera: Justera dessa utskrifter enligt dina tillståndsfält.
-        System.out.println(String.format("""
-            Resultat
-            ========
-            1) Av %d kunder handlade %d medan %d missades.
-            2) Total tid %d kassor varit lediga: %.2f te.
-               Genomsnittlig ledig kassatid: %.2f te (dvs %.2f%% av tiden från öppning tills sista kunden betalat).
-            3) Total tid %d kunder tvingats köa: %.2f te.
-               Genomsnittlig kötid: %.2f te.""",
-               
-		   tillstånd.getTotaltAntalKunderSomFörsöktHandlat(),
-		   tillstånd.getTotaltAntalBetaldaKunder(),
-		   tillstånd.getTotaltAntalMissadeKunder(),
-		   tillstånd.getMaxAntalKassor(), 
-		   tillstånd.getTotalTidLedigaKassor(),
-		   tillstånd.getGenomsnittligLedigKassatid(),
-		   tillstånd.getAndelTidLedigaKassor(),
-		   tillstånd.getTotaltAntalKunderSomKöat(),
-           tillstånd.getTotalTidIKassaKö(),
-           tillstånd.getGenomsnittligKöTid()
-      )); 
+        System.out.println(String.format("Resultat\n========\n1) Av %d kunder handlade %d medan %d missades.\n2) Total tid %d kassor varit lediga: %.2f te.\n   Genomsnittlig ledig kassatid: %.2f te (dvs %.2f%% av tiden från öppning tills sista kunden betalat).\n3) Total tid %d kunder tvingats köa: %.2f te.\n   Genomsnittlig kötid: %.2f te.", this.tillstånd.getTotaltAntalKunderSomFörsöktHandlat(), this.tillstånd.getTotaltAntalBetaldaKunder(), this.tillstånd.getTotaltAntalMissadeKunder(), this.tillstånd.getMaxAntalKassor(), this.tillstånd.getTotalTidLedigaKassor(), this.tillstånd.getGenomsnittligLedigKassatid(), this.tillstånd.getAndelTidLedigaKassor(), this.tillstånd.getTotaltAntalKunderSomKöat(), this.tillstånd.getTotalTidIKassaKö(), this.tillstånd.getGenomsnittligKöTid()));
     }
 }
-
-
-
-

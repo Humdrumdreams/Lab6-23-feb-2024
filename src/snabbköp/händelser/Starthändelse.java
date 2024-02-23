@@ -1,13 +1,14 @@
- /**
-* @author Ludvig Lidén, Botan Guzel, Sergij Wennström
- */
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
 package snabbköp.händelser;
 
+import generellSim.Event;
+import generellSim.EventQueue;
 import snabbköp.SnabbköpTillstånd;
 import snabbköp.händelser.övrigt.Kund;
-import generellSim.EventQueue;
-import generellSim.Event;
 
 public class Starthändelse extends Event {
     private SnabbköpTillstånd tillstånd;
@@ -16,25 +17,16 @@ public class Starthändelse extends Event {
         super(tillstånd, eQ, timeOfEvent);
         this.tillstånd = tillstånd;
     }
-        
-    @Override
+
     public void executeEvent() {
-    	tillstånd.öppnaSnabbköp(); // Sätter snabbköpet till "öppet" och initialiserar tillståndet
-    	System.out.println("Snabbköpet är nu öppet och redo att ta emot kunder.");
-
-
-        // Skapa den första ankomsthändelsen för en kund och lägg till den i event queue
-        Kund nyKund = new Kund(tillstånd); // Skapa en ny kund med ett unikt ID
-        double nästaAnkomstTid = tillstånd.getNästaAnkomstTid(getTimeOfEvent());
-        eQ.addEvent(new Ankomsthändelse(tillstånd, eQ, nästaAnkomstTid, nyKund));
-        
-        //Skapa även stängningseventet
-    	eQ.addEvent(new Stängningshändelse( tillstånd, eQ, tillstånd.getTidentSnabbköpetStänger()));
-       
+        this.tillstånd.öppnaSnabbköp();
+        System.out.println("Snabbköpet är nu öppet och redo att ta emot kunder.");
+        Kund nyKund = new Kund(this.tillstånd);
+        double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent());
+        this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, nyKund));
+        this.eQ.addEvent(new Stängningshändelse(this.tillstånd, this.eQ, this.tillstånd.getTidentSnabbköpetStänger()));
     }
-   
 
-    @Override
     public String getName() {
         return "Start";
     }

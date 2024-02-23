@@ -1,28 +1,28 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package snabbköp.händelser;
 
 import generellSim.Event;
 import generellSim.EventQueue;
-import generellSim.SimState;
 import snabbköp.SnabbköpTillstånd;
 
-public class Stängningshändelse extends Event{
+public class Stängningshändelse extends Event {
+    private SnabbköpTillstånd tillstånd;
 
-	private SnabbköpTillstånd tillstånd;
+    public Stängningshändelse(SnabbköpTillstånd tillstånd, EventQueue eQ, double timeOfEvent) {
+        super(tillstånd, eQ, timeOfEvent);
+        this.tillstånd = tillstånd;
+    }
 
-	public Stängningshändelse(SnabbköpTillstånd tillstånd, EventQueue eQ, double timeOfEvent) {
-		super(tillstånd, eQ, timeOfEvent);
-		this.tillstånd = tillstånd;
-	}
+    public void executeEvent() {
+        System.out.println("Snabbköpet har stängt vid tid " + this.getTimeOfEvent());
+        this.tillstånd.stängSnabbköp();
+    }
 
-	@Override
-	
-	public void executeEvent() {
-		System.out.println("Snabbköpet har stängt vid tid " + getTimeOfEvent());
-		tillstånd.stängSnabbköp();
-	}
-
-	@Override
-	public String getName() {
-		return "Stänger";
-	}
+    public String getName() {
+        return "Stänger";
+    }
 }
