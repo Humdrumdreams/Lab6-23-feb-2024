@@ -10,9 +10,10 @@ import generellSim.SimState;
 public class SnabbköpTillstånd extends SimState {
     private TimeCalculations tidBeräkningar;
     private int kundIDRäknare;
+    private int kundID;
     private int antalLedigaKassor;
-    private int totalTidLedigaKassor;
-    private int totalTidIKassaKö;
+    private double totalTidLedigaKassor;
+    private double totalTidIKassaKö;
     private int totaltAntalKunderSomKöat;
     private int totaltAntalKunderSomFörsöktHandlat;
     private int antalKunderISnabbköpet = 0;
@@ -41,7 +42,7 @@ public class SnabbköpTillstånd extends SimState {
         this.minPlockTid = minPlockTid;
         this.maxPlockTid = maxPlockTid;
         this.tidBeräkningar = new TimeCalculations(ankomstRate, frö, minPlockTid, maxPlockTid, minKassaTid, maxKassaTid);
-        this.kundIDRäknare = 0;
+        this.kundIDRäknare = -1;
         this.maxAntalKassor = antalKassor;
         this.kassaKö = new KassaKö();
         this.tidenSnabbköpetStänger = tidenSnabbköpetStänger;
@@ -50,6 +51,8 @@ public class SnabbköpTillstånd extends SimState {
     public int ökaKundIDRäknare() {
         return ++this.kundIDRäknare;
     }
+    public void setKundID(int kundID) { this.kundID = kundID; }
+    public int getKundID() { return this.kundID; }
 
     public KassaKö getKassaKö() {
         return this.kassaKö;
@@ -75,9 +78,8 @@ public class SnabbköpTillstånd extends SimState {
         --this.antalLedigaKassor;
     }
 
-    public int getTotalTidLedigaKassor() {
-        return this.totalTidLedigaKassor;
-    }
+    public double getTotalTidLedigaKassor() { return this.totalTidLedigaKassor; }
+    public void setTotalTidLedigaKassor(double value) { this.totalTidLedigaKassor = value; }
 
     public double getAnkomstRate() {
         return this.ankomstRate;
@@ -139,11 +141,10 @@ public class SnabbköpTillstånd extends SimState {
         ++this.totaltAntalMissadeKunder;
     }
 
-    public int getTotaltAntalKunderSomKöat() {
-        return this.totaltAntalKunderSomKöat;
-    }
+    public int getTotaltAntalKunderSomKöat() { return this.totaltAntalKunderSomKöat; }
+    public void ökaTotaltAntalKunderSomKöat() { this.totaltAntalKunderSomKöat++; }
 
-    public int getTotalTidIKassaKö() {
+    public double getTotalTidIKassaKö() {
         return this.totalTidIKassaKö;
     }
 
