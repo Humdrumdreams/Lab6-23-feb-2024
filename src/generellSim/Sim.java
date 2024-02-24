@@ -24,7 +24,7 @@ public abstract class Sim {
                 Event nextEvent = this.eQ.getNextEvent();
                 nextEvent.executeEvent();
                 this.state.setTime(nextEvent.getTimeOfEvent());
-                this.view.update(this.state, (Object)null);
+                this.view.update(this.state, nextEvent);
                 if (this.state.simulationRunning()) {
                     continue;
                 }
