@@ -15,10 +15,7 @@ public class KassaKö {
     public KassaKö() {
     }
 
-    public void läggTillIKö(Kund kund) {
-        this.kö.add(kund);
-        System.out.println(this.kö);
-    }
+    public void läggTillIKö(Kund kund) { this.kö.add(kund); }
 
     public Kund taNästaFrånKö() {
         return this.kö.isEmpty() ? null : (Kund)this.kö.remove(0);
@@ -32,18 +29,12 @@ public class KassaKö {
         return this.kö.size();
     }
 
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Kassakö: [");
+    public ArrayList SkapaTillfälligtKö() {
+        ArrayList<Integer> tempKö = new ArrayList();
 
         for(int i = 0; i < this.kö.size(); ++i) {
-            sb.append(((Kund)this.kö.get(i)).toString());
-            if (i < this.kö.size() - 1) {
-                sb.append(", ");
-            }
+            tempKö.add(((Kund)this.kö.get(i)).getKundID());
         }
-
-        sb.append("]");
-        return sb.toString();
+        return tempKö;
     }
 }
