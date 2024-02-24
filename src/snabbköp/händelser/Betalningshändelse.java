@@ -21,7 +21,7 @@ public class Betalningshändelse extends Event {
     }
 
     public void executeEvent() {
-        System.out.println("Kund " + this.kund.getKundID() + " betalar vid tid " + this.getTimeOfEvent());
+        this.tillstånd.setKundID(this.kund.getKundID());
         this.tillstånd.ökaTotaltAntalBetaldaKunder();
         this.tillstånd.minskaAntalKunderISnabbköpet();
         if (!this.tillstånd.getKassaKö().isEmpty()) {

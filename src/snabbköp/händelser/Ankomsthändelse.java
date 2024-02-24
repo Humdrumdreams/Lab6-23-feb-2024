@@ -25,14 +25,13 @@ public class Ankomsthändelse extends Event {
             this.kund.setNyttKundID();
             double nästaAnkomstTid;
             if (this.tillstånd.getAntalKunderISnabbköpet() <= this.tillstånd.getMaxAntalKunder()) {
-                System.out.println("Kund " + this.kund.getKundID() + " ankommer vid tid " + this.getTimeOfEvent());
+                this.tillstånd.setKundID(this.kund.getKundID());
                 this.tillstånd.ökaAntalKunderISnabbköpet();
                 this.tillstånd.ökaTotaltAntalKunderSomFörsöktHandlat();
                 nästaAnkomstTid = this.tillstånd.getNästaPlockTid(this.getTimeOfEvent());
                 this.eQ.addEvent(new Plockhändelse(this.tillstånd, this.eQ, this.getTimeOfEvent() + nästaAnkomstTid, this.kund));
             } else {
                 this.tillstånd.läggTillMissadKund();
-                System.out.println("Kund " + this.kund.getKundID() + " missades eftersom snabbköpet är fullt.");
             }
 
             if (this.tillstånd.ärSnabbköpÖppet()) {

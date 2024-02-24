@@ -21,14 +21,14 @@ public class Plockhändelse extends Event {
     }
 
     public void executeEvent() {
-        System.out.println("Kund " + this.kund.getKundID() + " har plockat sina varor vid tid " + this.getTimeOfEvent());
+        this.tillstånd.setKundID(this.kund.getKundID());
         if (this.tillstånd.getAntalLedigaKassor() > 0) {
             this.tillstånd.minskaAntalLedigaKassor();
             double betalningTid = this.tillstånd.getNästaBetalningsTid(this.getTimeOfEvent());
             this.eQ.addEvent(new Betalningshändelse(this.tillstånd, this.eQ, this.getTimeOfEvent() + betalningTid, this.kund));
         } else {
-            System.out.println("Kund " + this.kund.getKundID() + " ställs i kassakön");
             this.tillstånd.getKassaKö().läggTillIKö(this.kund);
+            this.tillstånd.ökaTotaltAntalKunderSomKöat();
         }
 
     }
