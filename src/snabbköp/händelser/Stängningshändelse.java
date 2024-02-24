@@ -18,7 +18,6 @@ public class Stängningshändelse extends Event {
     }
 
     public void executeEvent() {
-        System.out.println("Snabbköpet har stängt vid tid " + this.getTimeOfEvent());
         this.tillstånd.stängSnabbköp();
     }
 

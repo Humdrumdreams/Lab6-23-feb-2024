@@ -20,7 +20,6 @@ public class Starthändelse extends Event {
 
     public void executeEvent() {
         this.tillstånd.öppnaSnabbköp();
-        System.out.println("Snabbköpet är nu öppet och redo att ta emot kunder.");
         Kund nyKund = new Kund(this.tillstånd);
         double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent());
         this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, nyKund));

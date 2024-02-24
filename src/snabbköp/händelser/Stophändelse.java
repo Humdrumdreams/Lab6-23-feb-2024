@@ -19,7 +19,6 @@ public class Stophändelse extends Event {
 
     public void executeEvent() {
         this.tillstånd.stopSimulation();
-        System.out.println("Simuleringen stoppas vid tid " + this.getTimeOfEvent());
     }
 
     public String getName() {
