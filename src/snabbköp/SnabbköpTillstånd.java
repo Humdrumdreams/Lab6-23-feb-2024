@@ -41,7 +41,7 @@ public class SnabbköpTillstånd extends SimState {
         this.maxKassaTid = maxKassaTid;
         this.minPlockTid = minPlockTid;
         this.maxPlockTid = maxPlockTid;
-        this.tidBeräkningar = new TimeCalculations(ankomstRate, frö, minPlockTid, maxPlockTid, minKassaTid, maxKassaTid);
+        this.tidBeräkningar = new TimeCalculations(ankomstRate, frö, minKassaTid, maxKassaTid, minPlockTid, maxPlockTid);
         this.kundIDRäknare = -1;
         this.maxAntalKassor = antalKassor;
         this.kassaKö = new KassaKö();
