@@ -151,7 +151,7 @@ public class SnabbköpTillstånd extends SimState {
     public double getTotalTidIKassaKö() {
         return this.totalTidIKassaKö;
     }
-    public void setTotalTidIKassaKö(double value) { this.totalTidIKassaKö = this.totalTidIKassaKö + value;}
+    public void setTotalTidIKassaKö(double value) { this.totalTidIKassaKö = value;}
 
     public void minskaAntalKunderSomKöar() {
         --this.antalKunderSomKöar;
@@ -163,7 +163,7 @@ public class SnabbköpTillstånd extends SimState {
     }
 
     public double getGenomsnittligKöTid() {
-        return this.totaltAntalKunderSomKöat > 0 ? (double)this.totalTidIKassaKö / (double)this.totaltAntalKunderSomKöat : 0.0;
+        return this.totaltAntalKunderSomKöat > 0 ? (double)this.getTotalTidIKassaKö() / (double)this.totaltAntalKunderSomKöat : 0.0;
     }
 
     public double getAndelTidLedigaKassor() {

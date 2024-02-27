@@ -42,7 +42,7 @@ public class SnabbköpVy extends SimView {
                         this.tillstånd.getTotaltAntalKunderSomFörsöktHandlat(),
                         this.tillstånd.getTotaltAntalMissadeKunder(),
                         this.tillstånd.getTotaltAntalKunderSomKöat(),
-                        this.tillstånd.getGenomsnittligKöTid(),
+                        this.tillstånd.getTotalTidIKassaKö(),
                         this.tillstånd.getKassaKö().köStorlek(),
                         this.tillstånd.getKassaKö().SkapaTillfälligtKö()
                 ));

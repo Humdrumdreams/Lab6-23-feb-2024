@@ -35,8 +35,10 @@ public class Plockhändelse extends Event {
      */
     public void executeEvent() {
         double difference = this.timeOfEvent - this.eQ.getCurrent();
-        this.tillstånd.setTotalTidLedigaKassor(this.tillstånd.getAntalLedigaKassor() * difference);
-        //this.tillstånd.setTotalTidIKassaKö(this.tillstånd.getKassaKö().köStorlek() * difference);
+        double händelseTid = this.tillstånd.getAntalLedigaKassor() * difference;
+        double köTid = this.tillstånd.getTotalTidIKassaKö() + (this.tillstånd.getKassaKö().köStorlek() * difference);
+        this.tillstånd.setTotalTidLedigaKassor(händelseTid);
+        this.tillstånd.setTotalTidIKassaKö(köTid);
         this.tillstånd.setKundID(this.kund.getKundID());
         if (this.tillstånd.getAntalLedigaKassor() > 0) {
             this.tillstånd.minskaAntalLedigaKassor();

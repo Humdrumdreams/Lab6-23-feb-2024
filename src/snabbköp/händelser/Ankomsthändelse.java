@@ -35,8 +35,10 @@ public class Ankomsthändelse extends Event {
      */
     public void executeEvent() {
         double difference = this.timeOfEvent - this.eQ.getCurrent();
-        this.tillstånd.setTotalTidLedigaKassor(this.tillstånd.getAntalLedigaKassor() * difference);
-        //this.tillstånd.setTotalTidIKassaKö(this.tillstånd.getKassaKö().köStorlek() * difference);
+        double händelseTid = this.tillstånd.getAntalLedigaKassor() * difference;
+        double köTid = this.tillstånd.getTotalTidIKassaKö() + (this.tillstånd.getKassaKö().köStorlek() * difference);
+        this.tillstånd.setTotalTidLedigaKassor(händelseTid);
+        this.tillstånd.setTotalTidIKassaKö(köTid);
         if (this.tillstånd.ärSnabbköpÖppet()) { //Kollar om snabbköpet är öppet
             if (this.tillstånd.getAntalKunderISnabbköpet() <= this.tillstånd.getMaxAntalKunder()) { //Kollar om snabbköpet är fullt
                 this.kund.setNyttKundID(); //Skapa ett KunID för kunden som ankommer.
