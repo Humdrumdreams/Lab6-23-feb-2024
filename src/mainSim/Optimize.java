@@ -44,7 +44,7 @@ public class Optimize {
         Random rand = new Random(frö);
         int counter = 0;
         int maxAntalKassor = 0;
-        Long nextSeed;
+        long nextSeed = 0L;
 
         while(counter < 100){
             int nyAntalKassor = metod2(rand.nextLong());
