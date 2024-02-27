@@ -44,9 +44,11 @@ public class Optimize {
         Random rand = new Random(frö);
         int counter = 0;
         int maxAntalKassor = 0;
+        int nextSeed = 0;
 
         while(counter < 100){
             int nyAntalKassor = metod2(rand.nextLong());
+            nextSeed = rand.nextLong();
             if(maxAntalKassor != Math.max(maxAntalKassor, nyAntalKassor)){
                 counter = 0;
                 maxAntalKassor = Math.max(maxAntalKassor, nyAntalKassor);
@@ -54,9 +56,9 @@ public class Optimize {
             else{
                 counter += 1;
             }
-            //maxAntalKassor = Math.max(maxAntalKassor, nyAntalKassor);
         }
-        return maxAntalKassor;
+        System.out.println(counter);
+        return maxAntalKassor, nextSeed;
     }
     public static void main(String[] args) {
         Optimize optimize = new Optimize();
