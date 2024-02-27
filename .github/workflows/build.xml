@@ -1,7 +1,7 @@
 <project name="Lab6" default="compile">
 
     <property name="src.dir" value="src"/>
-    <property name="build.dir" value=".github/workflows/build"/>
+    <property name="build.dir" value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
 
     <target name="init">
