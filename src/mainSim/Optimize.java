@@ -60,7 +60,7 @@ public class Optimize {
     public static void main(String[] args) {
         Optimize optimize = new Optimize();
         System.out.println(optimize.metod2(1234L));
-        System.out.println(optimize.metod2(1234L));
+        System.out.println(optimize.metod3(1234L));
     }
 }
 
