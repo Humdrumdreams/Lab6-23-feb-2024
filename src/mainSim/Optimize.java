@@ -46,7 +46,7 @@ public class Optimize {
         int maxAntalKassor = 0;
         long nextSeed = 0L;
 
-        while(counter < 100){
+        while(counter < 98765432){
             int nyAntalKassor = metod2(rand.nextLong());
             nextSeed = rand.nextLong();
             System.out.println("Next Seed: "+nextSeed);
