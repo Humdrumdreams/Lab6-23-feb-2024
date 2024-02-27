@@ -49,11 +49,12 @@ public class Optimize {
             int nyAntalKassor = metod2(rand.nextLong());
             if(maxAntalKassor != Math.max(maxAntalKassor, nyAntalKassor)){
                 counter = 0;
+                maxAntalKassor = Math.max(maxAntalKassor, nyAntalKassor);
             }
             else{
                 counter += 1;
             }
-            maxAntalKassor = Math.max(maxAntalKassor, nyAntalKassor);
+            //maxAntalKassor = Math.max(maxAntalKassor, nyAntalKassor);
         }
         return maxAntalKassor;
     }
