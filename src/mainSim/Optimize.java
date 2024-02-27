@@ -46,7 +46,7 @@ public class Optimize {
         int maxAntalKassor = 0;
         long nextSeed = 0L;
 
-        while(counter < 98765432){
+        while(counter < 98732){
             int nyAntalKassor = metod2(rand.nextLong());
             nextSeed = rand.nextLong();
             System.out.println("Next Seed: "+nextSeed);
@@ -57,7 +57,6 @@ public class Optimize {
             else{
                 counter += 1;
             }
-            System.out.println(counter);
         }
         return new Object[]{maxAntalKassor, nextSeed};
     }
@@ -67,8 +66,6 @@ public class Optimize {
         Object[] hehe = optimize.metod3(1234L);
         int maxKassor = (int) hehe[0];
         long seed = (long) hehe[1];
-        System.out.println(maxKassor);
-        System.out.println(seed);
     }
 }
 
