@@ -24,4 +24,7 @@ jobs:
     - name: Run program and capture output
       run: java -cp .github/workflows/build/classes mainSim.main
       continue-on-error: true
-      id:run-program
+      id: run-program
+    - name: Run optimization process
+      run: java -cp .github/workflows/build/classes mainSim.Optimize
+      if: ${{ steps.run-program.outcome == 'success' }}
