@@ -9,8 +9,8 @@ import generellSim.SimState;
 
 public class SnabbköpTillstånd extends SimState {
     private TimeCalculations tidBeräkningar;
-    private int kundIDRäknare;
     private int kundID;
+    private int kundIDRäknare;
     private int antalLedigaKassor;
     private double totalTidLedigaKassor;
     private double totalTidIKassaKö;
@@ -51,8 +51,8 @@ public class SnabbköpTillstånd extends SimState {
     public int ökaKundIDRäknare() {
         return ++this.kundIDRäknare;
     }
-    public void setKundID(int kundID) { this.kundID = kundID; }
     public int getKundID() { return this.kundID; }
+    public void setKundID(int value) { this.kundID = value; }
 
     public KassaKö getKassaKö() {
         return this.kassaKö;
@@ -78,8 +78,10 @@ public class SnabbköpTillstånd extends SimState {
         --this.antalLedigaKassor;
     }
 
-    public double getTotalTidLedigaKassor() { return this.totalTidLedigaKassor; }
-    public void setTotalTidLedigaKassor(double value) { this.totalTidLedigaKassor = value; }
+    public double getTotalTidLedigaKassor() {
+        return this.totalTidLedigaKassor;
+    }
+    public void setTotalTidLedigaKassor(double value) { this.totalTidLedigaKassor = this.totalTidLedigaKassor + value; }
 
     public double getAnkomstRate() {
         return this.ankomstRate;
@@ -141,20 +143,15 @@ public class SnabbköpTillstånd extends SimState {
         ++this.totaltAntalMissadeKunder;
     }
 
-    public int getTotaltAntalKunderSomKöat() { return this.totaltAntalKunderSomKöat; }
+    public int getTotaltAntalKunderSomKöat() {
+        return this.totaltAntalKunderSomKöat;
+    }
     public void ökaTotaltAntalKunderSomKöat() { this.totaltAntalKunderSomKöat++; }
 
     public double getTotalTidIKassaKö() {
         return this.totalTidIKassaKö;
     }
-
-    public int getAntalKunderSomKöar() {
-        return this.antalKunderSomKöar;
-    }
-
-    public void ökaAntalKunderSomKöar() {
-        ++this.antalKunderSomKöar;
-    }
+    public void setTotalTidIKassaKö(double value) { this.totalTidIKassaKö = this.totalTidIKassaKö + value;}
 
     public void minskaAntalKunderSomKöar() {
         --this.antalKunderSomKöar;
@@ -203,6 +200,7 @@ public class SnabbköpTillstånd extends SimState {
         this.ärSnabbköpÖppet = false;
     }
 
+    @SuppressWarnings("deprecation")
     public void öppnaSnabbköp() {
         this.ärSnabbköpÖppet = true;
         this.startSimulation();

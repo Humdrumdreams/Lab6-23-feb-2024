@@ -1,27 +1,25 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
 
 package randomNum;
 
 import java.util.Random;
 
 public class ExponentialRandomStream {
-    private Random rand;
-    private double arrivalRate;
 
-    public ExponentialRandomStream(double arrivalRate, long seed) {
-        this.rand = new Random(seed);
-        this.arrivalRate = arrivalRate;
+    private Random rand;
+    private double lambda;
+
+    public ExponentialRandomStream(double lambda, long seed) {
+        rand = new Random(seed);
+        this.lambda = lambda;
     }
 
-    public ExponentialRandomStream(double arrivalRate) {
-        this.rand = new Random();
-        this.arrivalRate = arrivalRate;
+    public ExponentialRandomStream(double lambda) {
+        rand = new Random();
+        this.lambda = lambda;
     }
 
     public double next() {
-        return -Math.log(this.rand.nextDouble()) / this.arrivalRate;
+        return -Math.log(rand.nextDouble())/lambda;
     }
 }
+
