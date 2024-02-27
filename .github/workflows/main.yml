@@ -1,0 +1,30 @@
+# This workflow will build a Java project with Ant
+name: Java CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 16
+      uses: actions/setup-java@v3
+      with:
+        java-version: '16'
+        distribution: 'temurin'
+    - name: Build with Ant
+      run: ant -noinput -buildfile build.xml
+    - name: Run program and capture output
+      run: java -cp /home/runner/work/Lab6-23-feb-2024/Lab6-23-feb-2024/.github/workflows/build/classes mainSim.Main
+      continue-on-error: true
+      id: run-program
+    - name: Run optimization process
+      run: java -cp /home/runner/work/Lab6-23-feb-2024/Lab6-23-feb-2024/.github/workflows/build/classes mainSim.Optimize
+      if: ${{ steps.run-program.outcome == 'success' }}

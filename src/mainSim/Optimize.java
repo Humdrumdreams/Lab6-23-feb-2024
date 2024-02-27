@@ -40,27 +40,35 @@ public class Optimize {
         return maxAntalKunder;
     }
 
-    public int metod3(long frö){
+    public Object[] metod3(long frö){
         Random rand = new Random(frö);
         int counter = 0;
         int maxAntalKassor = 0;
+        long nextSeed = 0L;
 
-        while(counter < 100){
+        while(counter < 98765432){
             int nyAntalKassor = metod2(rand.nextLong());
+            nextSeed = rand.nextLong();
+            System.out.println("Next Seed: "+nextSeed);
             if(maxAntalKassor != Math.max(maxAntalKassor, nyAntalKassor)){
                 counter = 0;
+                maxAntalKassor = Math.max(maxAntalKassor, nyAntalKassor);
             }
             else{
                 counter += 1;
             }
-            maxAntalKassor = Math.max(maxAntalKassor, nyAntalKassor);
+            System.out.println(counter);
         }
-        return maxAntalKassor;
+        return new Object[]{maxAntalKassor, nextSeed};
     }
     public static void main(String[] args) {
         Optimize optimize = new Optimize();
         System.out.println(optimize.metod2(1234L));
-        System.out.println(optimize.metod2(1234L));
+        Object[] hehe = optimize.metod3(1234L);
+        int maxKassor = (int) hehe[0];
+        long seed = (long) hehe[1];
+        System.out.println(maxKassor);
+        System.out.println(seed);
     }
 }
 
