@@ -57,13 +57,17 @@ public class Optimize {
                 counter += 1;
             }
         }
-        System.out.println(counter);
+        System.out.println("Counter: "+counter);
         return new Object[]{maxAntalKassor, nextSeed};
     }
     public static void main(String[] args) {
         Optimize optimize = new Optimize();
         System.out.println(optimize.metod2(1234L));
-        System.out.println(optimize.metod3(1234L));
+        Object[] hehe = optimize.metod3(1234L);
+        int maxKassor = (int) hehe[0];
+        long seed = (long) hehe[1];
+        System.out.println(maxKassor);
+        System.out.println(seed);
     }
 }
 
