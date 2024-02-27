@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package snabbköp.händelser;
 
 import generellSim.Event;
@@ -10,6 +5,13 @@ import generellSim.EventQueue;
 import snabbköp.SnabbköpTillstånd;
 import snabbköp.händelser.övrigt.Kund;
 
+/**
+ * Hanterar öppningen av snabbköpet i simuleringen.
+ * Denna händelse aktiveras vid starttiden för snabbköpet och initierar processen
+ * att ta emot kunder.
+ *
+ * @author Botzan Güzel, Sergij Wennströmm, Ludvig Lidén
+ */
 public class Starthändelse extends Event {
     private SnabbköpTillstånd tillstånd;
 
@@ -18,15 +20,25 @@ public class Starthändelse extends Event {
         this.tillstånd = tillstånd;
     }
 
+    @Override
+    /**
+     * Exekvierar/startar snabbköpet. En ny kund skapas och även en ny ankomsstid för denna kund.
+     * Likt de övriga händelseklasserna läggs starthändelsen i eventkön.
+     */
     public void executeEvent() {
         this.tillstånd.öppnaSnabbköp();
-        System.out.println("Snabbköpet är nu öppet och redo att ta emot kunder.");
-        Kund nyKund = new Kund(this.tillstånd);
-        double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent());
+        Kund nyKund = new Kund(this.tillstånd); //Skapar en ny kund.
+        double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent()); //Skapar en ny ankomsstid för kunden
         this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, nyKund));
         this.eQ.addEvent(new Stängningshändelse(this.tillstånd, this.eQ, this.tillstånd.getTidentSnabbköpetStänger()));
     }
 
+    @Override
+    /**
+     * Returnerar namnet på händelsen, i detta fall "Start" (som dock inte används).
+     *
+     * @return En sträng som representerar händelsens namn.
+     */
     public String getName() {
         return "Start";
     }

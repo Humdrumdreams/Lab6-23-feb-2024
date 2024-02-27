@@ -9,10 +9,11 @@ import generellSim.SimState;
 
 public class SnabbköpTillstånd extends SimState {
     private TimeCalculations tidBeräkningar;
+    private int kundID;
     private int kundIDRäknare;
     private int antalLedigaKassor;
-    private int totalTidLedigaKassor;
-    private int totalTidIKassaKö;
+    private double totalTidLedigaKassor;
+    private double totalTidIKassaKö;
     private int totaltAntalKunderSomKöat;
     private int totaltAntalKunderSomFörsöktHandlat;
     private int antalKunderISnabbköpet = 0;
@@ -40,8 +41,8 @@ public class SnabbköpTillstånd extends SimState {
         this.maxKassaTid = maxKassaTid;
         this.minPlockTid = minPlockTid;
         this.maxPlockTid = maxPlockTid;
-        this.tidBeräkningar = new TimeCalculations(ankomstRate, frö, minPlockTid, maxPlockTid, minKassaTid, maxKassaTid);
-        this.kundIDRäknare = 0;
+        this.tidBeräkningar = new TimeCalculations(ankomstRate, frö, minKassaTid, maxKassaTid, minPlockTid, maxPlockTid);
+        this.kundIDRäknare = -1;
         this.maxAntalKassor = antalKassor;
         this.kassaKö = new KassaKö();
         this.tidenSnabbköpetStänger = tidenSnabbköpetStänger;
@@ -50,6 +51,8 @@ public class SnabbköpTillstånd extends SimState {
     public int ökaKundIDRäknare() {
         return ++this.kundIDRäknare;
     }
+    public int getKundID() { return this.kundID; }
+    public void setKundID(int value) { this.kundID = value; }
 
     public KassaKö getKassaKö() {
         return this.kassaKö;
@@ -75,9 +78,10 @@ public class SnabbköpTillstånd extends SimState {
         --this.antalLedigaKassor;
     }
 
-    public int getTotalTidLedigaKassor() {
+    public double getTotalTidLedigaKassor() {
         return this.totalTidLedigaKassor;
     }
+    public void setTotalTidLedigaKassor(double value) { this.totalTidLedigaKassor = this.totalTidLedigaKassor + value; }
 
     public double getAnkomstRate() {
         return this.ankomstRate;
@@ -142,18 +146,12 @@ public class SnabbköpTillstånd extends SimState {
     public int getTotaltAntalKunderSomKöat() {
         return this.totaltAntalKunderSomKöat;
     }
+    public void ökaTotaltAntalKunderSomKöat() { this.totaltAntalKunderSomKöat++; }
 
-    public int getTotalTidIKassaKö() {
+    public double getTotalTidIKassaKö() {
         return this.totalTidIKassaKö;
     }
-
-    public int getAntalKunderSomKöar() {
-        return this.antalKunderSomKöar;
-    }
-
-    public void ökaAntalKunderSomKöar() {
-        ++this.antalKunderSomKöar;
-    }
+    public void setTotalTidIKassaKö(double value) { this.totalTidIKassaKö = value;}
 
     public void minskaAntalKunderSomKöar() {
         --this.antalKunderSomKöar;
@@ -165,7 +163,7 @@ public class SnabbköpTillstånd extends SimState {
     }
 
     public double getGenomsnittligKöTid() {
-        return this.totaltAntalKunderSomKöat > 0 ? (double)this.totalTidIKassaKö / (double)this.totaltAntalKunderSomKöat : 0.0;
+        return this.totaltAntalKunderSomKöat > 0 ? (double)this.getTotalTidIKassaKö() / (double)this.totaltAntalKunderSomKöat : 0.0;
     }
 
     public double getAndelTidLedigaKassor() {
@@ -202,6 +200,7 @@ public class SnabbköpTillstånd extends SimState {
         this.ärSnabbköpÖppet = false;
     }
 
+    @SuppressWarnings("deprecation")
     public void öppnaSnabbköp() {
         this.ärSnabbköpÖppet = true;
         this.startSimulation();

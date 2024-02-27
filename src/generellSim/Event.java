@@ -1,38 +1,64 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package generellSim;
 
+/**
+ * Abstract base class for events within the simulation.
+ *
+ * @author Botzan Güzel, Sergij Wennströmm, Ludvig Lidén
+ */
 public abstract class Event {
-    protected SimState state;
-    protected EventQueue eQ;
-    protected double timeOfEvent;
-    protected boolean eventHappened;
+    protected SimState state; // General state of the simulation
+    protected EventQueue eQ; // Queue for managing events within the simulation
+    protected double timeOfEvent; // Simulation time when the event occurs
+    protected boolean eventHappened; // Flag indicating if the event has occurred
 
+    /**
+     * Constructor for creating a general event within the simulation.
+     *
+     * @param state The general state of the simulation.
+     * @param eQ The event queue for the simulation.
+     * @param timeOfEvent The time at which the event occurs within the simulation.
+     */
     public Event(SimState state, EventQueue eQ, double timeOfEvent) {
-        if (state != null && eQ != null) {
-            this.state = state;
-            this.eQ = eQ;
-            this.timeOfEvent = timeOfEvent;
-        } else {
-            throw new IllegalArgumentException("State and EventQueue cannot be null");
-        }
+        this.state = state;
+        this.eQ = eQ;
+        this.timeOfEvent = timeOfEvent;
     }
 
+    /**
+     * Executes the general event.
+     */
     public abstract void executeEvent();
 
+    /**
+     * Returns the name of the event.
+     *     *
+     * @return The name of the event.
+     */
     public abstract String getName();
 
+    /**
+     * Returns the simulation time at which the event occurs.
+     *
+     * @return The current time in the simulation when the event occurs.
+     */
     public double getTimeOfEvent() {
         return this.timeOfEvent;
     }
 
+    /**
+     * Checks if the event has already occurred within the event queue.
+     *
+     * @return True if the event has occurred, false otherwise.
+     */
     public boolean hasEventHappened() {
         return this.eventHappened;
     }
 
+    /**
+     * Marks the event as having occurred by setting the eventHappened flag to true.
+     *
+     * @param eventHappened The flag indicating the event has occurred.
+     */
     public void setEventHappened(boolean eventHappened) {
         this.eventHappened = eventHappened;
     }
