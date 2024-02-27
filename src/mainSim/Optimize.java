@@ -49,6 +49,7 @@ public class Optimize {
         while(counter < 100){
             int nyAntalKassor = metod2(rand.nextLong());
             nextSeed = rand.nextLong();
+            System.out.println("Next Seed: "+nextSeed);
             if(maxAntalKassor != Math.max(maxAntalKassor, nyAntalKassor)){
                 counter = 0;
                 maxAntalKassor = Math.max(maxAntalKassor, nyAntalKassor);
@@ -56,8 +57,8 @@ public class Optimize {
             else{
                 counter += 1;
             }
+            System.out.println(counter);
         }
-        System.out.println("Counter: "+counter);
         return new Object[]{maxAntalKassor, nextSeed};
     }
     public static void main(String[] args) {
