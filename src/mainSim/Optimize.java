@@ -40,7 +40,7 @@ public class Optimize {
         return maxAntalKunder;
     }
 
-    public int metod3(long frö){
+    public int[] metod3(long frö){
         Random rand = new Random(frö);
         int counter = 0;
         int maxAntalKassor = 0;
@@ -58,7 +58,7 @@ public class Optimize {
             }
         }
         System.out.println(counter);
-        return maxAntalKassor, nextSeed;
+        return new int[]{maxAntalKassor, nextSeed};
     }
     public static void main(String[] args) {
         Optimize optimize = new Optimize();
