@@ -22,9 +22,9 @@ jobs:
     - name: Build with Ant
       run: ant -noinput -buildfile build.xml
     - name: Run program and capture output
-      run: java -cp .github/workflows/build/classes mainSim.main
+      run: java -cp /home/runner/work/Lab6-23-feb-2024/Lab6-23-feb-2024/.github/workflows/build/classes mainSim.main
       continue-on-error: true
       id: run-program
     - name: Run optimization process
-      run: java -cp .github/workflows/build/classes mainSim.Optimize
+      run: java -cp /home/runner/work/Lab6-23-feb-2024/Lab6-23-feb-2024/.github/workflows/build/classes mainSim.Optimize
       if: ${{ steps.run-program.outcome == 'success' }}
