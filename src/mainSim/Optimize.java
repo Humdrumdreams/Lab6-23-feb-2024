@@ -66,6 +66,7 @@ public class Optimize {
         Object[] hehe = optimize.metod3(1234L);
         int maxKassor = (int) hehe[0];
         long seed = (long) hehe[1];
+        System.out.println("Max kassor: "+maxKassor+"\nRandom seed: "+ seed);
     }
 }
 
