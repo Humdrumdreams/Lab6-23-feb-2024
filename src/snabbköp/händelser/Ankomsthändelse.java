@@ -36,7 +36,7 @@ public class Ankomsthändelse extends Event {
     public void executeEvent() {
         if (this.tillstånd.ärSnabbköpÖppet()) { //Kollar om snabbköpet är öppet
             if (this.tillstånd.getAntalKunderISnabbköpet() < this.tillstånd.getMaxAntalKunder()) { //Kollar om snabbköpet är fullt// 1
-                this.kund.setNyttKundID(); //Skapa ett KunID för kunden som ankommer. // 0
+                //this.kund.setNyttKundID(); //Skapa ett KunID för kunden som ankommer. // 0
                 //System.out.println("ANKOMST: " +this.kund.getKundID());
                 //this.tillstånd.setKundIDISnabbköpet(this.kund.getKundID());
                 this.tillstånd.ökaAntalKunderISnabbköpet();
@@ -56,7 +56,10 @@ public class Ankomsthändelse extends Event {
     }
 
 
-    public void returnKund() { this.tillstånd.setKundIDISnabbköpet(this.kund.getKundID());}
+    public void returnKund() { 
+        this.kund.setNyttKundID(); //Skapa ett KunID för kunden som ankommer. // 0
+        this.tillstånd.setKundIDISnabbköpet(this.kund.getKundID());
+    }
 
 
     /**
