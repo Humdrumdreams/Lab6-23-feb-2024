@@ -43,7 +43,4 @@ public abstract class Event {
     public double getTimeOfEvent() {
         return this.timeOfEvent;
     }
-
-    public void returnKund() { }
-
 }
