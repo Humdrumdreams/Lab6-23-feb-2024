@@ -48,7 +48,7 @@ public class Betalningshändelse extends Event {
         }
     }
 
-    public void returnKund() { this.tillstånd.setKundIDISnabbköpe(this.kund.getKundID());}
+    public void returnKund() { this.tillstånd.setKundIDISnabbköpet(this.kund.getKundID());}
 
     
     /**
