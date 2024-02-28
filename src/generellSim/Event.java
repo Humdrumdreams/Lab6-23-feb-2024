@@ -44,4 +44,6 @@ public abstract class Event {
         return this.timeOfEvent;
     }
 
+    public void returnKund() { }
+
 }
