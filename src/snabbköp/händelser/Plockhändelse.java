@@ -48,6 +48,8 @@ public class Plockhändelse extends Event {
 
     }
 
+    public int returnKund() { return this.kund;}
+
     public String getName() {
         return "Plock";
     }
