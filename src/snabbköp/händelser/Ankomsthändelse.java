@@ -13,7 +13,7 @@ import snabbköp.händelser.övrigt.Kund;
  */
 public class Ankomsthändelse extends Event {
     private SnabbköpTillstånd tillstånd;
-    private Kund kund;
+    public Kund kund;
 
     /**
      * Skapar en ankomsthändelse med specificerat tillstånd, händelsekö, tidpunkt för händelsen och kunden.
@@ -34,25 +34,21 @@ public class Ankomsthändelse extends Event {
      * är fullt. Om snabbköpet är öppet men fullt lägg till missad kund. Om snabbköpet är stängt exekviera inte ankomsthändelsen.
      */
     public void executeEvent() {
-        double difference = this.timeOfEvent - this.eQ.getCurrent();
-        double händelseTid = this.tillstånd.getAntalLedigaKassor() * difference;
-        double köTid = this.tillstånd.getTotalTidIKassaKö() + (this.tillstånd.getKassaKö().köStorlek() * difference);
-        this.tillstånd.setTotalTidLedigaKassor(händelseTid);
-        this.tillstånd.setTotalTidIKassaKö(köTid);
         if (this.tillstånd.ärSnabbköpÖppet()) { //Kollar om snabbköpet är öppet
-            if (this.tillstånd.getAntalKunderISnabbköpet() <= this.tillstånd.getMaxAntalKunder()) { //Kollar om snabbköpet är fullt
-                this.kund.setNyttKundID(); //Skapa ett KunID för kunden som ankommer.
-                this.tillstånd.setKundID(this.kund.getKundID());
+            if (this.tillstånd.getAntalKunderISnabbköpet() < this.tillstånd.getMaxAntalKunder()) { //Kollar om snabbköpet är fullt// 1
+                this.kund.setNyttKundID(); //Skapa ett KunID för kunden som ankommer. // 0
+                //System.out.println("ANKOMST: " +this.kund.getKundID());
+                //this.tillstånd.setKundIDISnabbköpet(this.kund.getKundID());
                 this.tillstånd.ökaAntalKunderISnabbköpet();
                 this.tillstånd.ökaTotaltAntalKunderSomFörsöktHandlat();
 
                 //Skapa en ny plocktid för kunden som har ankommit
                 double plockTid = this.tillstånd.getNästaPlockTid(this.getTimeOfEvent()); //Skapa en ny plocktid
-                this.eQ.addEvent(new Plockhändelse(this.tillstånd, this.eQ, plockTid, this.kund)); //Lägga till plocktid till eventet
+                this.eQ.addEvent(new Plockhändelse(this.tillstånd, this.eQ, plockTid, this.kund)); //Lägga till plocktid till eventet // 1
 
                 //Skapa en ankomsttid för nästa kunbd
                 double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent());
-                this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, new Kund(this.tillstånd)));
+                this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, new Kund(this.tillstånd))); // no id
             } else {
                 this.tillstånd.läggTillMissadKund();
             }

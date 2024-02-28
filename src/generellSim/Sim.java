@@ -12,7 +12,7 @@ public abstract class Sim {
     protected SimState state; // General state of the simulation
     protected SimView view; // View for observing simulation state changes
 
-    public double currentTime = 0.0;
+    //private double currentTime = 0.0;
 
     /**
      * Constructs a simulation instance with specified event queue and simulation state.
@@ -42,11 +42,12 @@ public abstract class Sim {
         while(true) {
             if (!this.eQ.isEmpty()) {
                 Event nextEvent = this.eQ.getNextEvent();
-                nextEvent.executeEvent(); //Execute the event
                 this.state.setTime(nextEvent.getTimeOfEvent()); //Changes in state
                 this.view.update(this.state, nextEvent); //Updates view
-                currentTime = nextEvent.getTimeOfEvent();
-                this.eQ.setCurrent(currentTime);
+                nextEvent.executeEvent(); //Execute the event
+                //this.view.update(this.state, nextEvent); //Updates view
+                //currentTime = nextEvent.getTimeOfEvent();
+                //this.eQ.setCurrent(currentTime);
                 if (this.state.simulationRunning()) { //Check if the simulation is runnign
                     continue;
                 } else {

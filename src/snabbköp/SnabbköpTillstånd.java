@@ -9,7 +9,7 @@ import generellSim.SimState;
 
 public class SnabbköpTillstånd extends SimState {
     private TimeCalculations tidBeräkningar;
-    private int kundID;
+    private int kundIDISnabbköpet;
     private int kundIDRäknare;
     private int antalLedigaKassor;
     private double totalTidLedigaKassor;
@@ -51,8 +51,8 @@ public class SnabbköpTillstånd extends SimState {
     public int ökaKundIDRäknare() {
         return ++this.kundIDRäknare;
     }
-    public int getKundID() { return this.kundID; }
-    public void setKundID(int value) { this.kundID = value; }
+    public int getKundIDISnabbköpet() { return this.kundIDISnabbköpet; }
+    public void setKundIDISnabbköpet(int value) { this.kundIDISnabbköpet = value; }
 
     public KassaKö getKassaKö() {
         return this.kassaKö;

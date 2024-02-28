@@ -8,9 +8,8 @@ package snabbköp;
 import generellSim.Event;
 import generellSim.SimView;
 import java.util.Observable;
-import snabbköp.händelser.Starthändelse;
-import snabbköp.händelser.Stophändelse;
-import snabbköp.händelser.Stängningshändelse;
+
+import snabbköp.händelser.*;
 
 public class SnabbköpVy extends SimView {
     private SnabbköpTillstånd tillstånd;
@@ -34,7 +33,8 @@ public class SnabbköpVy extends SimView {
                         "%-10.2f\t%-10s\t%-10s\t%-10s\t%-10s\t%-10.2f\t%-10s\t%-10s\t%-10s\t%-10s\t%-10.2f\t%-10s\t%-10s",
                         this.tillstånd.getTime(),
                         ((Event) arg).getName(),
-                        this.tillstånd.getKundID(),
+                        (arg instanceof Ankomsthändelse || arg instanceof Betalningshändelse || arg instanceof Plockhändelse) ?
+                                ((Ankomsthändelse) arg).kund.getKundID() : 0,
                         this.tillstånd.ärSnabbköpÖppet() ? "Ö" : "S",
                         this.tillstånd.getAntalLedigaKassor(),
                         this.tillstånd.getTotalTidLedigaKassor(),

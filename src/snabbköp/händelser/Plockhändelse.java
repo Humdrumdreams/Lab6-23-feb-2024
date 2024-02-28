@@ -13,7 +13,7 @@ import snabbköp.händelser.övrigt.Kund;
  */
 public class Plockhändelse extends Event {
     private SnabbköpTillstånd tillstånd;
-    private Kund kund;
+    public Kund kund;
 
     /**
      * Konstruerar en plockhändelse med given snabbköpstillstånd, händelsekö, tidpunkt för händelsen, och kunden som plockar varor.
@@ -34,16 +34,13 @@ public class Plockhändelse extends Event {
      * eller om kassan är full ställs kunden i kassakön.
      */
     public void executeEvent() {
-        double difference = this.timeOfEvent - this.eQ.getCurrent();
-        double händelseTid = this.tillstånd.getAntalLedigaKassor() * difference;
-        double köTid = this.tillstånd.getTotalTidIKassaKö() + (this.tillstånd.getKassaKö().köStorlek() * difference);
-        this.tillstånd.setTotalTidLedigaKassor(händelseTid);
-        this.tillstånd.setTotalTidIKassaKö(köTid);
-        this.tillstånd.setKundID(this.kund.getKundID());
+        //System.out.println("PLOCK: " + this.kund.getKundID());
+        //this.tillstånd.setKundIDISnabbköpet(this.kund.getKundID());
         if (this.tillstånd.getAntalLedigaKassor() > 0) {
-            this.tillstånd.minskaAntalLedigaKassor();
             double betalningTid = this.tillstånd.getNästaBetalningsTid(this.getTimeOfEvent()); //Skapa ny betalningstid
             this.eQ.addEvent(new Betalningshändelse(this.tillstånd, this.eQ, betalningTid, this.kund));
+            this.tillstånd.minskaAntalLedigaKassor();
+
         } else { //Ställ kunden i kassakön
             this.tillstånd.ökaTotaltAntalKunderSomKöat();
             this.tillstånd.getKassaKö().läggTillIKö(this.kund);

@@ -13,7 +13,7 @@ import snabbköp.händelser.övrigt.Kund;
  */
 public class Betalningshändelse extends Event {
     private SnabbköpTillstånd tillstånd;
-    private Kund kund;
+    public Kund kund;
 
     /**
      * Konstruerar en betalningshändelse med given snabbköpstillstånd, händelsekö, tidpunkt för händelsen, och kunden som ska betala.
@@ -33,12 +33,9 @@ public class Betalningshändelse extends Event {
      * Exekvierar betalningsprocessen för kunden och hanterar köhantering vid kassan.
      */
     public void executeEvent() {
-        double difference = this.timeOfEvent - this.eQ.getCurrent();
-        double händelseTid = this.tillstånd.getAntalLedigaKassor() * difference;
-        double köTid = this.tillstånd.getTotalTidIKassaKö() + (this.tillstånd.getKassaKö().köStorlek() * difference);
-        this.tillstånd.setTotalTidLedigaKassor(händelseTid);
-        this.tillstånd.setTotalTidIKassaKö(köTid);
-        this.tillstånd.setKundID(this.kund.getKundID());
+
+        //System.out.println("BETALNING: " + this.kund.getKundID());
+        //this.tillstånd.setKundIDISnabbköpet(this.kund.getKundID());
         this.tillstånd.ökaTotaltAntalBetaldaKunder();
         this.tillstånd.minskaAntalKunderISnabbköpet();
         if (!this.tillstånd.getKassaKö().isEmpty()) { //Kollar om kassakön är tom
