@@ -48,6 +48,9 @@ public class Betalningshändelse extends Event {
         }
     }
 
+    public int returnKund() { return this.kund;}
+
+    
     /**
      * Returnerar namnet på händelsen.
      *
