@@ -56,6 +56,7 @@ public class Ankomsthändelse extends Event {
     }
 
 
+    public int returnKund() { return this.kund;}
 
 
     /**
