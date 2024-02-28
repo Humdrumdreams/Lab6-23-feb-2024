@@ -33,10 +33,7 @@ public class SnabbköpVy extends SimView {
                         "%-10.2f\t%-10s\t%-10s\t%-10s\t%-10s\t%-10.2f\t%-10s\t%-10s\t%-10s\t%-10s\t%-10.2f\t%-10s\t%-10s",
                         this.tillstånd.getTime(),
                         ((Event) arg).getName(),
-                        (arg instanceof Ankomsthändelse) ? ((Ankomsthändelse) arg).kund.getKundID() :
-(arg instanceof Betalningshändelse) ? ((Betalningshändelse) arg).kund.getKundID() :
-(arg instanceof Plockhändelse) ? ((Plockhändelse) arg).kund.getKundID() :
-0,
+                        this.tillstånd.getKundIDISnabbköpet(),
                         this.tillstånd.ärSnabbköpÖppet() ? "Ö" : "S",
                         this.tillstånd.getAntalLedigaKassor(),
                         this.tillstånd.getTotalTidLedigaKassor(),
