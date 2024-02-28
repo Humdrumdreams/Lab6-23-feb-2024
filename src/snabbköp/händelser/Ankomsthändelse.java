@@ -56,7 +56,7 @@ public class Ankomsthändelse extends Event {
     }
 
 
-    public int returnKund() { return this.kund.getKndID();}
+    public void returnKund() { this.tillstånd.setKundIDISnabbköpet(this.kund.getKndID());}
 
 
     /**
