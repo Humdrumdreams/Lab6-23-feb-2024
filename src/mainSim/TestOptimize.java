@@ -18,7 +18,7 @@ public class TestOptimize {
         while (low <= high) {
             int mid = low + (high - low) / 2;
             int missadeKunder = metod1(mid, maxAntalKunder, ankomstRate, frö, minKassaTid, maxKassaTid, minPlockTid, maxPlockTid, tidenSnabbköpetStänger);
-        
+            System.out.println(missadeKunder);
             if (missadeKunder == 0) {
                 // If no customers are missed, we try to minimize the number of cash registers further
                 result = mid;
