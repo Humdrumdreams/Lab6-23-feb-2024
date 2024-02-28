@@ -1,5 +1,5 @@
 package generellSim;
-import snabbköp.händelser.*
+import snabbköp.händelser.*;
 
 /**
  * Abstract class for the simulation. It is core in managing events,
