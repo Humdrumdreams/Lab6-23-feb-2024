@@ -47,8 +47,8 @@ public class Ankomsthändelse extends Event {
                 this.eQ.addEvent(new Plockhändelse(this.tillstånd, this.eQ, plockTid, this.kund)); //Lägga till plocktid till eventet // 1
 
                 //Skapa en ankomsttid för nästa kunbd
-                //double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent());
-                //this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, new Kund(this.tillstånd))); // no id
+                double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent());
+                this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, new Kund(this.tillstånd))); // no id
             } else {
                 this.tillstånd.läggTillMissadKund();
             }
@@ -59,8 +59,8 @@ public class Ankomsthändelse extends Event {
     public void returnKund() { 
         this.kund.setNyttKundID(); //Skapa ett KunID för kunden som ankommer. // 0
         this.tillstånd.setKundIDISnabbköpet(this.kund.getKundID());
-        double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent());
-        this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, new Kund(this.tillstånd))); // no id
+        //double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent());
+        //this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, new Kund(this.tillstånd))); // no id
     }
 
 
