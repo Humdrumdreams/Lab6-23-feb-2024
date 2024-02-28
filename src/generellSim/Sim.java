@@ -43,7 +43,7 @@ public abstract class Sim {
             if (!this.eQ.isEmpty()) {
                 Event nextEvent = this.eQ.getNextEvent();
                 this.state.setTime(nextEvent.getTimeOfEvent()); //Changes in state
-                if (nextEvent instanceof Ankomsthändelse || nextEvent instanceof || Plockhändelse || nextEvent instanceof Betalningshändelse){
+                if (nextEvent instanceof Ankomsthändelse || nextEvent instanceof Plockhändelse || nextEvent instanceof Betalningshändelse){
                  nextEvent.returnKund();
                 }
                 this.view.update(this.state, nextEvent); //Updates view
