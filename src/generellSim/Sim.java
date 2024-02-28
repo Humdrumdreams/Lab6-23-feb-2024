@@ -43,9 +43,9 @@ public abstract class Sim {
             if (!this.eQ.isEmpty()) {
                 Event nextEvent = this.eQ.getNextEvent();
                 this.state.setTime(nextEvent.getTimeOfEvent()); //Changes in state
-                if (nextEvent instanceof Ankomsthändelse || nextEvent instanceof Plockhändelse || nextEvent instanceof Betalningshändelse){
-                 nextEvent.returnKund();
-                }
+                if (nextEvent instanceof Ankomsthändelse){ (Ankomsthändelse)nextEvent.returnKund(); }
+                if (nextEvent instanceof Plockhändelse){ (Plockhändelse)nextEvent.returnKund(); }
+                if (nextEvent instanceof Betalningshändelse){ (Betalningshändelse)nextEvent.returnKund(); }
                 this.view.update(this.state, nextEvent); //Updates view
                 nextEvent.executeEvent(); //Execute the event
                 //this.view.update(this.state, nextEvent); //Updates view
