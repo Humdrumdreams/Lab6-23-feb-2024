@@ -48,7 +48,7 @@ public class Plockhändelse extends Event {
 
     }
 
-    public int returnKund() { return this.kund.getKundID();}
+    public void returnKund() { this.tillstånd. setKundIDISnabbköpet(this.kund.getKundID());}
 
     public String getName() {
         return "Plock";
