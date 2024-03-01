@@ -39,7 +39,10 @@ public class EventQueue {
      * @return The next event, or null if the queue is empty.
      */
     public Event getNextEvent() {
-        !this.eventQueue.isEmpty() ? this.setDifference(this.eventQueue.get(0).getTimeOfEvent() - this.eventQueue.get(1).getTimeOfEvent()) : this.setDifference(0);
+        if (this.eventQueue.size() >= 2) {
+            this.setDifference(this.eventQueue.get(0).getTimeOfEvent() - this.eventQueue.get(1).getTimeOfEvent());
+        } else {
+         this.setDifference(0);
         return !this.eventQueue.isEmpty() ? this.eventQueue.remove(0) : null;
     }
 
