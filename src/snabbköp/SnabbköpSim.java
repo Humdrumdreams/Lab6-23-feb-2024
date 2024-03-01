@@ -21,8 +21,11 @@ public class SnabbköpSim extends Sim {
      * @param eQ Händelsekö för snabbköpssimulatorn.
      * @param tillstånd Tillståndet för snabbköpssimulatorn.
      */
+    public SnabbköpSim(EventQueue eQ, SnabbköpTillstånd tillstånd, boolean optimize) {
+        super(eQ, tillstånd, optimize);
+    }
     public SnabbköpSim(EventQueue eQ, SnabbköpTillstånd tillstånd) {
-        super(eQ, tillstånd);
+        super(eQ, tillstånd, false);
     }
     
     /**
@@ -32,7 +35,5 @@ public class SnabbköpSim extends Sim {
      * @return SimView Visuell representation av snabbköpssimulatorn.
      */
     @Override
-    protected SimView createView() {
-        return new SnabbköpVy((SnabbköpTillstånd)this.state);
-    }
+    protected SimView createView() { return new SnabbköpVy((SnabbköpTillstånd)this.state); }
 }
