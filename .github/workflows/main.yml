@@ -28,3 +28,6 @@ jobs:
     - name: Run optimization process
       run: java -cp /home/runner/work/Lab6-23-feb-2024/Lab6-23-feb-2024/.github/workflows/build/classes mainSim.Optimize
       if: ${{ steps.run-program.outcome == 'success' }}
+    - name: Run Optimize Tests
+      run: java -cp /home/runner/work/Lab6-23-feb-2024/Lab6-23-feb-2024/.github/workflows/build/classes mainSim.TestOptimize
+      if: ${{ steps.run-program.outcome == 'success' }}

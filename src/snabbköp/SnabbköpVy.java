@@ -1,17 +1,16 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
 
 package snabbköp;
 
 import generellSim.Event;
 import generellSim.SimView;
 import java.util.Observable;
+
+import snabbköp.händelser.KundHändelse;
 import snabbköp.händelser.Starthändelse;
 import snabbköp.händelser.Stophändelse;
 import snabbköp.händelser.Stängningshändelse;
 
+@SuppressWarnings("deprecation")
 public class SnabbköpVy extends SimView {
     private SnabbköpTillstånd tillstånd;
 
@@ -20,37 +19,33 @@ public class SnabbköpVy extends SimView {
     }
 
     public void update(Observable o, Object arg) {
-        Event event = (Event)arg;
-        if (event instanceof Starthändelse) {
-            this.visaParametrar();
-        } else if (event instanceof Stophändelse) {
-            this.visaResultat();
-        } else {
-            if (event instanceof Stängningshändelse) {
-                System.out.println(String.format("%-10.2f\t%-10s", this.tillstånd.getTime(),
-                        ((Event) arg).getName()));
+            	
+    	
+    	// Först, hantera alla händelser som involverar en kund och har ett kundID.
+        if (arg instanceof Event) {
+            Event event = (Event) arg;
+            String kundID = "";
+            
+            
+            if (event instanceof Starthändelse) {
+            	this.visaParametrar();
+            	System.out.println(String.format("%-10.2f\t%-10s", this.tillstånd.getTime(), "Start"));
+            } else if (event instanceof KundHändelse) {
+            	kundID = String.valueOf(((KundHändelse) event).getKundID());
+                visaKörning(event, kundID);
+            } else if (event instanceof Stängningshändelse) {
+            	kundID = "---";
+                visaKörning(event, kundID);
             } else {
-                System.out.println(String.format(
-                        "%-10.2f\t%-10s\t%-10s\t%-10s\t%-10s\t%-10.2f\t%-10s\t%-10s\t%-10s\t%-10s\t%-10.2f\t%-10s\t%-10s",
-                        this.tillstånd.getTime(),
-                        ((Event) arg).getName(),
-                        this.tillstånd.getKundID(),
-                        this.tillstånd.ärSnabbköpÖppet() ? "Ö" : "S",
-                        this.tillstånd.getAntalLedigaKassor(),
-                        this.tillstånd.getTotalTidLedigaKassor(),
-                        this.tillstånd.getAntalKunderISnabbköpet(),
-                        this.tillstånd.getTotaltAntalKunderSomFörsöktHandlat(),
-                        this.tillstånd.getTotaltAntalMissadeKunder(),
-                        this.tillstånd.getTotaltAntalKunderSomKöat(),
-                        this.tillstånd.getTotalTidIKassaKö(),
-                        this.tillstånd.getKassaKö().köStorlek(),
-                        this.tillstånd.getKassaKö().SkapaTillfälligtKö()
-                ));
+            	System.out.println(String.format("%-10.2f\t%-10s", this.tillstånd.getTime(), "Stop"));
+            	this.visaResultat();
             }
+             
         }
-
+       
     }
 
+    
     private void visaParametrar() {
         System.out.println(String.format("""
                 PARAMETRAR
@@ -61,6 +56,7 @@ public class SnabbköpVy extends SimView {
                 Plocktider, [P_min..Pmax]: [%.2f..%.2f]
                 Betaltider, [K_min..Kmax]: [%.2f..%.2f]
                 Frö, f...................: %d
+                
                 FÖRLOPP
                 =======
                 %-10s\t%-10s\t%-10s\t%-10s\t%-10s\t%-10s\t%-10s\t%-10s\t%-10s\t%-10s\t%-10s\t%-10s\t%-10s""",
@@ -85,9 +81,32 @@ public class SnabbköpVy extends SimView {
                 "köT",
                 "köar",
                 "[Kassakö..]"));
-        System.out.println(String.format("%-10.2f\t%-10s", this.tillstånd.getTime(), "Start"));
+        //System.out.println(String.format("%-10.2f\t%-10s", this.tillstånd.getTime(), "Start"));
     }
-
+    
+    private void visaKörning(Event event, String kundID) {
+    	System.out.println(String.format(
+			 "%-10.2f\t%-10s\t%-10s\t%-10s\t%-10d\t%-10.2f\t%-10d\t%-10d\t%-10d\t%-10d\t%-10.2f\t%-10s\t%-10s",
+		     
+			 this.tillstånd.getTime(),
+		     event.getName(),
+		     kundID,
+		     this.tillstånd.ärSnabbköpÖppet() ? "Ö" : "S",
+		     this.tillstånd.getAntalLedigaKassor(), //led
+		     this.tillstånd.getTotalTidLedigaKassor(), //ledT
+		     this.tillstånd.getAntalKunderISnabbköpet(),
+		     this.tillstånd.getTotaltAntalKunderSomFörsöktHandlat(),
+		     this.tillstånd.getTotaltAntalMissadeKunder(), //9
+		     this.tillstånd.getTotaltAntalKunderSomKöat(),
+		     this.tillstånd.getTotalTidIKassaKö(),
+		     this.tillstånd.getKassaKö().köStorlek(),
+		     this.tillstånd.getKassaKö().SkapaTillfälligtKö()
+		    ));
+    }
+    
+    
+    
+    
     private void visaResultat() {
         System.out.println(String.format("""
                 Resultat

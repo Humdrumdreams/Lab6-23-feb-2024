@@ -11,7 +11,7 @@ import java.util.Comparator;
  */
 public class EventQueue {
     private ArrayList<Event> eventQueue = new ArrayList<>();
-    private double difference;
+    //private double difference;
 
     /**
      * Constructs an empty event queue. No arguments are required as the constructor
@@ -27,14 +27,9 @@ public class EventQueue {
      * @param e The event to be added.
      * @return True if the event was added, false if it has already occurred.
      */
-    public boolean addEvent(Event e) {
-        if (!e.hasEventHappened()) {
-            this.eventQueue.add(e);
-            this.eventQueue.sort(Comparator.comparingDouble(Event::getTimeOfEvent));
-            return true;
-        } else {
-            return false;
-        }
+    public void addEvent(Event e) {
+        this.eventQueue.add(e);
+        this.eventQueue.sort(Comparator.comparingDouble(Event::getTimeOfEvent));
     }
 
     /**
@@ -55,6 +50,6 @@ public class EventQueue {
         return this.eventQueue.isEmpty();
     }
 
-    public double getCurrent() { return this.difference; }
-    public void setCurrent(double value) { this.difference = value; }
+    //public double getCurrent() { return this.difference; }
+    //public void setCurrent(double value) { this.difference = value; }
 }

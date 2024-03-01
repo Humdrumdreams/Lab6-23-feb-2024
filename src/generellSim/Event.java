@@ -45,21 +45,5 @@ public abstract class Event {
         return this.timeOfEvent;
     }
 
-    /**
-     * Checks if the event has already occurred within the event queue.
-     *
-     * @return True if the event has occurred, false otherwise.
-     */
-    public boolean hasEventHappened() {
-        return this.eventHappened;
-    }
-
-    /**
-     * Marks the event as having occurred by setting the eventHappened flag to true.
-     *
-     * @param eventHappened The flag indicating the event has occurred.
-     */
-    public void setEventHappened(boolean eventHappened) {
-        this.eventHappened = eventHappened;
-    }
+   
 }
