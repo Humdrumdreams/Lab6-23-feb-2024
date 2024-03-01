@@ -81,4 +81,5 @@ public class Ankomsthändelse extends Event implements KundHändelse{
     }
     private double calculateLed() {
 	return (this.tillstånd.getTotalTidLedigaKassor() + (this.eQ.getDifference() * this.tillstånd.getAntalLedigaKassor()));
+    }
 }
