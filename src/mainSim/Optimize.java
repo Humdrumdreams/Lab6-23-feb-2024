@@ -49,7 +49,7 @@ public class Optimize {
         int consecutiveEqualResults = 0;
         while (consecutiveEqualResults < 100) {
             int result = metod2(maxAntalKunder, ankomstRate, random.nextLong(), minKassaTid, maxKassaTid, minPlockTid, maxPlockTid, tidenSnabbköpetStänger);
-            System.out.println(consecutiveEqualResults);
+            //System.out.println(consecutiveEqualResults);
             if (result == previousResult) {
                 consecutiveEqualResults++;
             } else {
