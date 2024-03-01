@@ -5,7 +5,7 @@ import java.util.Random;
 
 
 
-public class TestOptimize {
+public class Optimize {
     public int metod1(int antalKassor, int maxAntalKunder, double ankomstRate, long frö, double minKassaTid, double maxKassaTid, double minPlockTid, double maxPlockTid, double tidenSnabbköpetStänger) {
         SnabbköpTillstånd tillstånd = new SnabbköpTillstånd(antalKassor, maxAntalKunder, ankomstRate, frö, minKassaTid, maxKassaTid, minPlockTid, maxPlockTid, tidenSnabbköpetStänger);
         return tillstånd.getTotaltAntalMissadeKunder();
@@ -32,7 +32,7 @@ public class TestOptimize {
         return result;
     }
     public static void main(String[] args) {
-        TestOptimize optimize = new TestOptimize();
+        Optimize optimize = new Optimize();
         System.out.println(optimize.metod2(7, 3.0, 13L, 0.35, 0.6, 0.6, 0.9, 8.0));
         //Object[] hehe = optimize.metod3(1234L);
         //int maxKassor = (int) hehe[0];
