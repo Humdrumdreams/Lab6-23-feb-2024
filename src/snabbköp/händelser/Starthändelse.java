@@ -9,7 +9,7 @@ import snabbköp.händelser.övrigt.Kund;
  * Hanterar öppningen av snabbköpet i simuleringen.
  * Denna händelse aktiveras vid starttiden för snabbköpet och initierar processen
  * att ta emot kunder.
- *
+ * 
  * @author Botzan Güzel, Sergij Wennströmm, Ludvig Lidén
  */
 public class Starthändelse extends Event {
@@ -22,21 +22,24 @@ public class Starthändelse extends Event {
 
     @Override
     /**
-     * Exekvierar/startar snabbköpet. En ny kund skapas och även en ny ankomsstid för denna kund.
-     * Likt de övriga händelseklasserna läggs starthändelsen i eventkön.
+     * Exekvierar/startar snabbköpet. En ny kund skapas och även en ny ankomsstid för denna kund. 
+     * Likt de övriga händelseklasserna läggs starthändelsen i eventkön. 
      */
     public void executeEvent() {
         this.tillstånd.öppnaSnabbköp();
-        Kund nyKund = new Kund(this.tillstånd); //Skapar en ny kund.
+        //Kund nyKund = new Kund(this.tillstånd); //Skapar en ny kund. 
+        Kund nyKund = this.tillstånd.skapaKund();
+
         double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent()); //Skapar en ny ankomsstid för kunden
         this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, nyKund));
         this.eQ.addEvent(new Stängningshändelse(this.tillstånd, this.eQ, this.tillstånd.getTidentSnabbköpetStänger()));
+
     }
 
     @Override
     /**
-     * Returnerar namnet på händelsen, i detta fall "Start" (som dock inte används).
-     *
+     * Returnerar namnet på händelsen, i detta fall "Start" (som dock inte används). 
+     * 
      * @return En sträng som representerar händelsens namn.
      */
     public String getName() {

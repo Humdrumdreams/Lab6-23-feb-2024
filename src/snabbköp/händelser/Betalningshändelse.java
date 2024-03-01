@@ -8,16 +8,16 @@ import snabbköp.händelser.övrigt.Kund;
 /**
  * Hanterar betalningsprocessen för en kund i snabbköpssimuleringen.
  * Denna händelse triggar när en kund är redo att betala för sina varor.
- *
+ * 
  * @author Botzan Güzel, Sergij Wennströmm, Ludvig Lidén
  */
-public class Betalningshändelse extends Event {
+public class Betalningshändelse extends Event implements KundHändelse{
     private SnabbköpTillstånd tillstånd;
-    public Kund kund;
+    private Kund kund;
 
     /**
      * Konstruerar en betalningshändelse med given snabbköpstillstånd, händelsekö, tidpunkt för händelsen, och kunden som ska betala.
-     *
+     * 
      * @param tillstånd Det aktuella tillståndet i snabbköpet.
      * @param eQ Händelsekön där händelsen hanteras.
      * @param timeOfEvent Tidpunkten då händelsen inträffar.
@@ -29,14 +29,17 @@ public class Betalningshändelse extends Event {
         this.kund = kund;
     }
 
+    public int getKundID() {
+        return this.kund.getKundID();
+    }
+    
+    
     /**
      * Exekvierar betalningsprocessen för kunden och hanterar köhantering vid kassan.
      */
     public void executeEvent() {
-
-        //System.out.println("BETALNING: " + this.kund.getKundID());
-        //this.tillstånd.setKundIDISnabbköpet(this.kund.getKundID());
-        this.tillstånd.ökaTotaltAntalBetaldaKunder();
+       
+    	this.tillstånd.ökaTotaltAntalBetaldaKunder();
         this.tillstånd.minskaAntalKunderISnabbköpet();
         if (!this.tillstånd.getKassaKö().isEmpty()) { //Kollar om kassakön är tom
             Kund nästaKund = this.tillstånd.getKassaKö().taNästaFrånKö(); //Ta nästa kund från kassan
@@ -44,16 +47,16 @@ public class Betalningshändelse extends Event {
             this.eQ.addEvent(new Betalningshändelse(this.tillstånd, this.eQ, betalningsTid, nästaKund));
             this.tillstånd.minskaAntalKunderSomKöar();
         } else { //Om det inte är någon kund i kö, öka antalet lediga kassor.
-            this.tillstånd.ökaAntalLedigaKassor();
+            this.tillstånd.ökaAntalLedigaKassor(); 
         }
     }
 
-    public void returnKund() { this.tillstånd.setKundIDISnabbköpet(this.kund.getKundID());}
-
+   
+    
     
     /**
      * Returnerar namnet på händelsen.
-     *
+     * 
      * @return En sträng som representerar händelsens namn, i detta fall "Betalning".
      */
     @Override

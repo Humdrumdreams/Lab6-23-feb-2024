@@ -5,8 +5,8 @@ import generellSim.EventQueue;
 import snabbköp.SnabbköpTillstånd;
 
 /**
- * Representerar stopphändelsen i snabbköpssimuleringen och används när simuleringen ska avslutas.
- *
+ * Representerar stopphändelsen i snabbköpssimuleringen och används när simuleringen ska avslutas. 
+ * 
  * @author Botzan Güzel, Sergij Wennströmm, Ludvig Lidén
  */
 public class Stophändelse extends Event {
@@ -14,7 +14,7 @@ public class Stophändelse extends Event {
 
     /**
      * Skapar en ny stopphändelse.
-     *
+     * 
      * @param tillstånd Det aktuella tillståndet i snabbköpet.
      * @param eQ Händelsekön där denna och andra händelser hanteras.
      * @param timeOfEvent Tiden då händelsen sker.
@@ -25,17 +25,16 @@ public class Stophändelse extends Event {
     }
 
     /**
-     * Utför stopphändelsen.
+     * Utför stopphändelsen. 
      */
     @Override
     public void executeEvent() {
         this.tillstånd.stopSimulation();
-        System.out.println("Simuleringen stoppas vid tid " + this.getTimeOfEvent());
     }
 
     /**
      * Returnerar namnet på händelsen, i detta fall "Stopp".
-     *
+     * 
      * @return En sträng som representerar händelsens namn.
      */
     @Override

@@ -8,16 +8,16 @@ import snabbköp.händelser.övrigt.Kund;
 /**
  * Hanterar händelsen då en kund plockar sina varor i snabbköpssimuleringen.
  * Denna händelse triggar när en kund börjar plocka varor.
- *
+ * 
  * @author Botzan Güzel, Sergij Wennströmm, Ludvig Lidén
  */
-public class Plockhändelse extends Event {
+public class Plockhändelse extends Event implements KundHändelse{
     private SnabbköpTillstånd tillstånd;
-    public Kund kund;
+    private Kund kund;
 
     /**
      * Konstruerar en plockhändelse med given snabbköpstillstånd, händelsekö, tidpunkt för händelsen, och kunden som plockar varor.
-     *
+     * 
      * @param tillstånd Det aktuella tillståndet i snabbköpet.
      * @param eQ Händelsekön där händelsen hanteras.
      * @param timeOfEvent Tidpunkten då händelsen inträffar.
@@ -28,29 +28,34 @@ public class Plockhändelse extends Event {
         this.tillstånd = tillstånd;
         this.kund = kund;
     }
+    
+
+	public int getKundID() {
+		return this.kund.getKundID();
+	}
 
     /**
      * Exekvierar plockhändelsen och antingen skapar en betalningshändelse för kunden
      * eller om kassan är full ställs kunden i kassakön.
      */
     public void executeEvent() {
-        //System.out.println("PLOCK: " + this.kund.getKundID());
-        //this.tillstånd.setKundIDISnabbköpet(this.kund.getKundID());
-        if (this.tillstånd.getAntalLedigaKassor() > 0) {
+    	
+        if (this.tillstånd.getAntalLedigaKassor() > 0) {  
+            this.tillstånd.minskaAntalLedigaKassor();
             double betalningTid = this.tillstånd.getNästaBetalningsTid(this.getTimeOfEvent()); //Skapa ny betalningstid
             this.eQ.addEvent(new Betalningshändelse(this.tillstånd, this.eQ, betalningTid, this.kund));
-            this.tillstånd.minskaAntalLedigaKassor();
-
         } else { //Ställ kunden i kassakön
-            this.tillstånd.ökaTotaltAntalKunderSomKöat();
-            this.tillstånd.getKassaKö().läggTillIKö(this.kund);
+        	this.tillstånd.ökaTotaltAntalKunderSomKöat();
+        	this.tillstånd.getKassaKö().läggTillIKö(this.kund);
         }
 
     }
-
-    public void returnKund() { this.tillstånd. setKundIDISnabbköpet(this.kund.getKundID());}
-
+    
+   
+  
     public String getName() {
         return "Plock";
     }
+
+	
 }
