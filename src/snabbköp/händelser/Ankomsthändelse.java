@@ -14,6 +14,7 @@ import snabbköp.händelser.övrigt.Kund;
 public class Ankomsthändelse extends Event implements KundHändelse{
     private SnabbköpTillstånd tillstånd;
     private Kund kund;
+    private double LedT;
 
 
 
@@ -50,6 +51,7 @@ public class Ankomsthändelse extends Event implements KundHändelse{
     public void executeEvent() {    	
     	if (this.tillstånd.ärSnabbköpÖppet()) { //Kollar om snabbköpet är öppet
     		this.tillstånd.ökaTotaltAntalKunderSomFörsöktHandlat();
+		this.calculateLed();
     		 //Skapa en ankomsttid för nästa kunbd
             double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent()); 
             this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, this.tillstånd.skapaKund())); 
@@ -77,4 +79,6 @@ public class Ankomsthändelse extends Event implements KundHändelse{
     public String getName() {
         return "Ankomst";
     }
+    private double calculateLed() {
+	return (this.tillstånd.getTotalTidLedigaKassor() + (this.eQ.getDifference() * this.tillstånd.getAntalLedigaKassor()));
 }
