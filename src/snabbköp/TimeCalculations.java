@@ -6,8 +6,8 @@ import randomNum.UniformRandomStream;
 /**
  * Klassen hanterar tidberäkningar för ankomst, plockning av varor och betalningstider
  * i snabbköpssimuleringen. Använder sig av exponentialfördelning för ankomsttider och
- * uniform fördelning för plock- och betalningstider.
- *
+ * uniform fördelning för plock- och betalningstider. 
+ * 
  * @author Botzan Güzel, Sergij Wennströmm, Ludvig Lidén
  */
 public class TimeCalculations {
@@ -17,7 +17,7 @@ public class TimeCalculations {
 
     /**
      * Skapar en instans av TimeCalculations med specificerade parametrar för tidberäkningar.
-     *
+     * 
      * @param lambda Parametern för hur ofta ankomsstiderna kommer utifrån exponentialfördelningen.
      * @param seed Startvärde för slumpmässigheten i tidberäkningar.
      * @param minKassaTid Minsta tid för betalning vid kassan.
@@ -33,7 +33,7 @@ public class TimeCalculations {
 
     /**
      * Slumpar fram nästa ankomsttid baserat på nuvarande tid och exponentialfördelningen.
-     *
+     * 
      * @param currTime Nuvarande tid i simuleringen.
      * @return Nästa ankomsttid.
      */
@@ -43,7 +43,7 @@ public class TimeCalculations {
 
     /**
      * Slumpar fram nästa plocktid baserat på nuvarande tid och uniform fördelning.
-     *
+     * 
      * @param currTime Nuvarande tid i simuleringen.
      * @return Tid för att plocka varor.
      */
@@ -53,7 +53,7 @@ public class TimeCalculations {
 
     /**
      * Slumpar fram nästa betalningstid baserat på nuvarande tid och uniform fördelning.
-     *
+     * 
      * @param currTime Nuvarande tid i simuleringen.
      * @return Betalningstid vid kassan.
      */
