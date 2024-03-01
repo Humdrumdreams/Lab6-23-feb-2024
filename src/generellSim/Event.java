@@ -9,6 +9,7 @@ public abstract class Event {
     protected SimState state; // General state of the simulation
     protected EventQueue eQ; // Queue for managing events within the simulation
     protected double timeOfEvent; // Simulation time when the event occurs
+    protected boolean eventHappened; // Flag indicating if the event has occurred
 
     /**
      * Constructor for creating a general event within the simulation.
@@ -43,4 +44,6 @@ public abstract class Event {
     public double getTimeOfEvent() {
         return this.timeOfEvent;
     }
+
+   
 }

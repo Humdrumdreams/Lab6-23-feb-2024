@@ -5,11 +5,11 @@ import java.util.Observable;
 /**
  * Represents the general state of the simulation. It manages the simulation's running state and time.
  * Observers are notified of changes, allowing for reactive updates in the simulation's view and other components.
- *
+ * 
  * @author Botzan Güzel, Sergij Wennströmm, Ludvig Lidén
  */
 public abstract class SimState extends Observable {
-
+    
     /**
      * Indicates whether the simulation is currently running. Initialized to false.
      */
@@ -29,7 +29,8 @@ public abstract class SimState extends Observable {
     /**
      * Starts the simulation by setting the {@code simulationRunning} flag to {@code true} and notifying observers.
      */
-    public void startSimulation() {
+    @SuppressWarnings("deprecation")
+	public void startSimulation() {
         this.simulationRunning = true;
         this.notifyObservers();
     }
@@ -37,14 +38,15 @@ public abstract class SimState extends Observable {
     /**
      * Stops the simulation by setting the {@code simulationRunning} flag to {@code false} and notifying observers.
      */
-    public void stopSimulation() {
+    @SuppressWarnings("deprecation")
+	public void stopSimulation() {
         this.simulationRunning = false;
         this.notifyObservers();
     }
 
     /**
      * Returns the current running state of the simulation.
-     *
+     * 
      * @return {@code true} if the simulation is running, {@code false} otherwise.
      */
     public boolean simulationRunning() {
@@ -53,7 +55,7 @@ public abstract class SimState extends Observable {
 
     /**
      * Retrieves the current simulation time.
-     *
+     * 
      * @return The current time of the simulation.
      */
     public double getTime() {
@@ -62,20 +64,21 @@ public abstract class SimState extends Observable {
 
     /**
      * Sets the simulation time to the specified value.
-     *
+     * 
      * @param time The new time to set for the simulation.
      */
     public void setTime(double time) {
         this.time = time;
     }
-
+    
     /**
      * Updates the simulation time based on an event and notifies observers about the change.
      * This method is typically called when an event occurs to synchronize the simulation state.
-     *
+     * 
      * @param e The event that triggers the time update.
      */
-    public void update(Event e) {
+    @SuppressWarnings("deprecation")
+	public void update(Event e) {
         this.time = e.getTimeOfEvent(); // Updates the simulation time based on the event's occurrence time.
         this.setChanged();
         this.notifyObservers();
