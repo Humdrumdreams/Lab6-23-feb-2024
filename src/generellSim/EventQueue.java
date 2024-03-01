@@ -11,6 +11,7 @@ import java.util.Comparator;
  */
 public class EventQueue {
     private ArrayList<Event> eventQueue = new ArrayList<>();
+    private double difference;
     //private double difference;
 
     /**
@@ -50,6 +51,6 @@ public class EventQueue {
         return this.eventQueue.isEmpty();
     }
 
-    //public double getCurrent() { return this.difference; }
-    //public void setCurrent(double value) { this.difference = value; }
+    public double getDifference() { return this.difference; }
+    public void setDifference(double value) { this.difference = value; }
 }
