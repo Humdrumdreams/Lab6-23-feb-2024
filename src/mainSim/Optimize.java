@@ -33,29 +33,7 @@ public class Optimize {
     }
 
 
-    public static int metod3(Random f) {
-        // Not fully tested yet !!!!!!
-        int prevValue = metod2(f.nextInt()); // Initial value
-        int sameValueCount = 0; // Counter for consecutive same values
-
-        for (int i = 1; i <= 100; i++) {
-            int nextValue = metod2(f.nextInt());
-            if (nextValue == prevValue) {
-                sameValueCount++;
-            } else {
-                sameValueCount = 0; // Reset count if value changes
-            }
-            prevValue = nextValue;
-
-            if (sameValueCount == 100) {
-                return nextValue; // Return the value if it remains the same for 100 consecutive times
-            }
-        }
-
-        // If no value remains the same for 100 consecutive times, return -1 or handle appropriately
-        return -1;
-    }
-
+    
 
     
     public static void main(String[] args) {
