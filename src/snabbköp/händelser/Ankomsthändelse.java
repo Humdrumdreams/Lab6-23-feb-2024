@@ -14,6 +14,7 @@ import snabbköp.händelser.övrigt.Kund;
 public class Ankomsthändelse extends Event implements KundHändelse{
     private SnabbköpTillstånd tillstånd;
     private Kund kund;
+    private double LedT;
 
 
 
@@ -50,9 +51,10 @@ public class Ankomsthändelse extends Event implements KundHändelse{
     public void executeEvent() {    	
     	if (this.tillstånd.ärSnabbköpÖppet()) { //Kollar om snabbköpet är öppet
     		this.tillstånd.ökaTotaltAntalKunderSomFörsöktHandlat();
+		    //this.tillstånd.setTotalTidLedigaKassor(this.calculateLed());
     		 //Skapa en ankomsttid för nästa kunbd
             double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent()); 
-            this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, this.tillstånd.skapaKund())); 
+            this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, this.tillstånd.skapaKund()));
             if (this.tillstånd.getAntalKunderISnabbköpet() < this.tillstånd.getMaxAntalKunder()) { //Kollar om snabbköpet är fullt
         		this.tillstånd.ökaAntalKunderISnabbköpet();
                 //Skapa en ny plocktid för kunden som har ankommit
@@ -76,5 +78,10 @@ public class Ankomsthändelse extends Event implements KundHändelse{
     @Override
     public String getName() {
         return "Ankomst";
+    }
+    private double calculateLed() {
+        double beräknat = this.eQ.getDifference() * this.tillstånd.getAntalLedigaKassor();
+        //System.out.println(this.tillstånd.getTotalTidLedigaKassor() + beräknat);
+        return this.tillstånd.getTotalTidLedigaKassor() + beräknat;
     }
 }

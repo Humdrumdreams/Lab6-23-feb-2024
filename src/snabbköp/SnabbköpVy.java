@@ -5,44 +5,55 @@ import generellSim.Event;
 import generellSim.SimView;
 import java.util.Observable;
 
-import snabbköp.händelser.KundHändelse;
-import snabbköp.händelser.Starthändelse;
-import snabbköp.händelser.Stophändelse;
-import snabbköp.händelser.Stängningshändelse;
+import snabbköp.händelser.*;
 
 @SuppressWarnings("deprecation")
 public class SnabbköpVy extends SimView {
     private SnabbköpTillstånd tillstånd;
+    private double lastEventTime;
+    private double sistaBetalningsHändelse;
 
-    public SnabbköpVy(SnabbköpTillstånd tillstånd) {
-        this.tillstånd = tillstånd;
-    }
+    public SnabbköpVy(SnabbköpTillstånd tillstånd) { this.tillstånd = tillstånd; }
 
     public void update(Observable o, Object arg) {
-            	
-    	
     	// Först, hantera alla händelser som involverar en kund och har ett kundID.
         if (arg instanceof Event) {
             Event event = (Event) arg;
             String kundID = "";
-            
-            
+
+            // Calculate time difference
+            double eventTidSkillnad = 0.0;
+            eventTidSkillnad = event.getTimeOfEvent() - lastEventTime;
+            double beräknaLedigaKassaTid = this.tillstånd.getTotalTidLedigaKassor() + (eventTidSkillnad * this.tillstånd.getAntalLedigaKassor());
+            double beräknaKassaKöTid = this.tillstånd.getTotalTidIKassaKö() + (eventTidSkillnad * this.tillstånd.getKassaKö().köStorlek());
+            this.lastEventTime = event.getTimeOfEvent();
+
             if (event instanceof Starthändelse) {
             	this.visaParametrar();
             	System.out.println(String.format("%-10.2f\t%-10s", this.tillstånd.getTime(), "Start"));
             } else if (event instanceof KundHändelse) {
+
+                if (!this.tillstånd.ärSnabbköpÖppet() && event instanceof Ankomsthändelse) {
+                    this.tillstånd.setTotalTidLedigaKassor(this.tillstånd.getTotalTidLedigaKassor());
+                } else {
+                    sistaBetalningsHändelse = this.tillstånd.getTime();
+                    this.tillstånd.setTotalTidLedigaKassor(beräknaLedigaKassaTid);
+                    this.tillstånd.setTotalTidIKassaKö(beräknaKassaKöTid);
+                }
+
             	kundID = String.valueOf(((KundHändelse) event).getKundID());
                 visaKörning(event, kundID);
             } else if (event instanceof Stängningshändelse) {
+                this.tillstånd.setTotalTidLedigaKassor(beräknaLedigaKassaTid);
             	kundID = "---";
                 visaKörning(event, kundID);
             } else {
             	System.out.println(String.format("%-10.2f\t%-10s", this.tillstånd.getTime(), "Stop"));
             	this.visaResultat();
             }
-             
+
         }
-       
+
     }
 
     
@@ -123,7 +134,7 @@ public class SnabbköpVy extends SimView {
                 this.tillstånd.getMaxAntalKassor(),
                 this.tillstånd.getTotalTidLedigaKassor(),
                 this.tillstånd.getGenomsnittligLedigKassatid(),
-                this.tillstånd.getAndelTidLedigaKassor(),
+                (this.tillstånd.getGenomsnittligLedigKassatid() / sistaBetalningsHändelse) * 100,
                 this.tillstånd.getTotaltAntalKunderSomKöat(),
                 this.tillstånd.getTotalTidIKassaKö(),
                 this.tillstånd.getGenomsnittligKöTid()

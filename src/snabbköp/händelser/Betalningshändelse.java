@@ -38,7 +38,7 @@ public class Betalningshändelse extends Event implements KundHändelse{
      * Exekvierar betalningsprocessen för kunden och hanterar köhantering vid kassan.
      */
     public void executeEvent() {
-       
+        //this.tillstånd.setTotalTidLedigaKassor(this.calculateLed());
     	this.tillstånd.ökaTotaltAntalBetaldaKunder();
         this.tillstånd.minskaAntalKunderISnabbköpet();
         if (!this.tillstånd.getKassaKö().isEmpty()) { //Kollar om kassakön är tom
@@ -62,5 +62,8 @@ public class Betalningshändelse extends Event implements KundHändelse{
     @Override
     public String getName() {
         return "Betalning";
+    }
+    private double calculateLed() {
+        return (this.tillstånd.getTotalTidLedigaKassor() + (this.eQ.getDifference() * this.tillstånd.getAntalLedigaKassor()));
     }
 }

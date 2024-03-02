@@ -39,7 +39,7 @@ public class Plockhändelse extends Event implements KundHändelse{
      * eller om kassan är full ställs kunden i kassakön.
      */
     public void executeEvent() {
-    	
+        //this.tillstånd.setTotalTidLedigaKassor(this.calculateLed());
         if (this.tillstånd.getAntalLedigaKassor() > 0) {  
             this.tillstånd.minskaAntalLedigaKassor();
             double betalningTid = this.tillstånd.getNästaBetalningsTid(this.getTimeOfEvent()); //Skapa ny betalningstid
@@ -56,6 +56,8 @@ public class Plockhändelse extends Event implements KundHändelse{
     public String getName() {
         return "Plock";
     }
-
+    private double calculateLed() {
+        return (this.tillstånd.getTotalTidLedigaKassor() + (this.eQ.getDifference() * this.tillstånd.getAntalLedigaKassor()));
+    }
 	
 }

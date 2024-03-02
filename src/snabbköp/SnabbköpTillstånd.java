@@ -47,7 +47,7 @@ public class SnabbköpTillstånd extends SimState {
         this.tidenSnabbköpetStänger = tidenSnabbköpetStänger;
     }
     
-
+    public SnabbköpTillstånd re() {return this;}
     private KundFabrik kundFabrik = new KundFabrik();
 
     public Kund skapaKund() {
@@ -83,9 +83,7 @@ public class SnabbköpTillstånd extends SimState {
         return this.totalTidLedigaKassor;
     }
     
-    public void ökaTotalTidLedigaKassor(double value) { 
-    	this.totalTidLedigaKassor = this.totalTidLedigaKassor + value; 
-    }
+    public void setTotalTidLedigaKassor(double value) { this.totalTidLedigaKassor = value; }
 
     public double getAnkomstRate() {
         return this.ankomstRate;
@@ -159,7 +157,7 @@ public class SnabbköpTillstånd extends SimState {
         return this.totalTidIKassaKö;
     }
 
-    //public void setTotalTidIKassaKö(double value) { this.totalTidIKassaKö = value;}
+    public void setTotalTidIKassaKö(double value) { this.totalTidIKassaKö = value;}
 
     
     public int getAntalKunderSomKöar() {
@@ -175,8 +173,8 @@ public class SnabbköpTillstånd extends SimState {
     }
 
     public double getGenomsnittligLedigKassatid() {
-        double totalTidÖppen = this.getTime();
-        return (double)this.totalTidLedigaKassor / (totalTidÖppen * (double)this.maxAntalKassor);
+        //double totalTidÖppen = this.getTime();
+        return (double)this.totalTidLedigaKassor / (double)this.maxAntalKassor;
     }
 
     public double getGenomsnittligKöTid() {
