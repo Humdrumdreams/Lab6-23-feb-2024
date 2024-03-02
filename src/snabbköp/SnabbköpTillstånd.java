@@ -46,7 +46,9 @@ public class SnabbköpTillstånd extends SimState {
         this.kassaKö = new KassaKö();
         this.tidenSnabbköpetStänger = tidenSnabbköpetStänger;
     }
-    
+    /*
+    asdfgadsfsda
+     */
     public SnabbköpTillstånd re() {return this;}
     private KundFabrik kundFabrik = new KundFabrik();
 

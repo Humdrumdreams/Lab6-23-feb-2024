@@ -19,7 +19,34 @@ public class Optimize {
         snabbköpSim.runEvents();
         return tillstånd.getTotaltAntalMissadeKunder();
     }
-    public int metod2(int maxAntalKunder, double ankomstRate, long frö, double minKassaTid, double maxKassaTid, double minPlockTid, double maxPlockTid, double tidenSnabbköpetStänger) {
+
+    public int metod2RaiseOne(long frö){
+        int maxAntalKunder = 10;
+        double stängSnabbköp = 10.0;
+        double maxPlockTid = 1.0;
+        double minPlockTid = 0.5;
+        double maxKassaTid = 3.0;
+        double minKassaTid = 2.0;
+        @SuppressWarnings("unused")
+        double lambda = 1.0;
+
+        int antalKassor = maxAntalKunder;
+
+        int totaltAntalKunderSomFörsöktHandlat = metod1(antalKassor, maxAntalKunder, antalKassor, frö, minKassaTid, maxKassaTid, minPlockTid, maxPlockTid, stängSnabbköp);
+
+        while(antalKassor >= 1){
+            int nyaMissadeKunder = metod1(antalKassor, maxAntalKunder, antalKassor, frö, minKassaTid, maxKassaTid, minPlockTid, maxPlockTid, stängSnabbköp);
+
+            if(totaltAntalKunderSomFörsöktHandlat != nyaMissadeKunder){
+                return antalKassor + 1;
+            }
+            antalKassor -= 1;
+        }
+        return maxAntalKunder;
+    }
+
+
+    public int metod2RaiseHalf(int maxAntalKunder, double ankomstRate, long frö, double minKassaTid, double maxKassaTid, double minPlockTid, double maxPlockTid, double tidenSnabbköpetStänger) {
         int low = 1;
         int high = Integer.MAX_VALUE; // Set a large upper bound for the number of cash registers
         int result = -2;
@@ -40,35 +67,42 @@ public class Optimize {
             }
         }
         // Return the lowest number of kassor that results in 0 missed customers
-        return result;
+        return result; // testa sista gången med mid - 1
     }
 
-    public int metod3(long f, int maxAntalKunder, double ankomstRate, double minKassaTid, double maxKassaTid, double minPlockTid, double maxPlockTid, double tidenSnabbköpetStänger) {
-        Random random = new Random((long) f); // Initialize Random with seed f
-        int previousResult = 0;
-        int consecutiveEqualResults = 0;
-        while (consecutiveEqualResults < 100) {
-            int result = metod2(maxAntalKunder, ankomstRate, random.nextLong(), minKassaTid, maxKassaTid, minPlockTid, maxPlockTid, tidenSnabbköpetStänger);
-            System.out.println(consecutiveEqualResults);
-            if (result == previousResult) {
-                consecutiveEqualResults++;
-            } else {
-                consecutiveEqualResults = 0; // Reset if result is not equal to previous result
+
+    public int metod3(long frö){
+        Random rand = new Random(frö);
+        int counter = 0;
+        int maxAntalKassor = 0;
+
+        while(counter < 100){
+            int nyAntalKassor = metod2RaiseOne(rand.nextLong());
+            if(maxAntalKassor != Math.max(maxAntalKassor, nyAntalKassor)){
+                counter = 0;
             }
-            previousResult = result;
+            else{
+                counter += 1;
+            }
+            maxAntalKassor = Math.max(maxAntalKassor, nyAntalKassor);
         }
-        return previousResult;
+        return maxAntalKassor;
     }
-
 
 
 
     public static void main(String[] args) {
         Optimize optimize = new Optimize();
-        int m2 = optimize.metod2(7, 3.0, 13L, 0.35, 0.6, 0.6, 0.9, 8.0);
-        System.out.println("Metod2: " + m2);
-        System.out.println("Metod1 with metod2 as an argument: " + optimize.metod1( m2,7, 3.0, 13L, 0.35, 0.6, 0.6, 0.9, 8.0));
-        int m3 = optimize.metod3(13,7, 3.0, 0.35, 0.6, 0.6, 0.9, 8.0);
+        int m2RaiseOne = optimize.metod2RaiseOne(13L);
+        int m2RaiseHalf = optimize.metod2RaiseHalf(7, 3.0, 13L, 0.35, 0.6, 0.6, 0.9, 8.0);
+        System.out.println("Metod2 Raise One: " + m2RaiseOne);
+        System.out.println("Metod2 Raise Half: " + m2RaiseHalf);
+
+        int m1RaiseOne = optimize.metod1(m2RaiseOne,7, 3.0, 13L, 0.35, 0.6, 0.6, 0.9, 8.0);
+        int m1RaiseHalf = optimize.metod1(m2RaiseHalf,7, 3.0, 13L, 0.35, 0.6, 0.6, 0.9, 8.0);
+        System.out.println(String.format("Metod1 with Metod2 Raise One (%d) as an argument: %d", m2RaiseOne,m1RaiseOne));
+        System.out.println(String.format("Metod1 with Metod2 Raise Half (%d) as an argument: %d", m2RaiseHalf,m1RaiseHalf));
+        int m3 = optimize.metod3(13);
         System.out.println("Metod3: " + m3);
     }
 
