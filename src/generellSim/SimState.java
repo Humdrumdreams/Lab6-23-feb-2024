@@ -70,17 +70,5 @@ public abstract class SimState extends Observable {
     public void setTime(double time) {
         this.time = time;
     }
-    
-    /**
-     * Updates the simulation time based on an event and notifies observers about the change.
-     * This method is typically called when an event occurs to synchronize the simulation state.
-     * 
-     * @param e The event that triggers the time update.
-     */
-    @SuppressWarnings("deprecation")
-	public void update(Event e) {
-        this.time = e.getTimeOfEvent(); // Updates the simulation time based on the event's occurrence time.
-        this.setChanged();
-        this.notifyObservers();
-    }
+
 }

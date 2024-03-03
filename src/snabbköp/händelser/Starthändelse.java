@@ -19,7 +19,6 @@ public class Starthändelse extends Event {
         super(tillstånd, eQ, timeOfEvent);
         this.tillstånd = tillstånd;
     }
-
     @Override
     /**
      * Exekvierar/startar snabbköpet. En ny kund skapas och även en ny ankomsstid för denna kund. 
@@ -27,13 +26,11 @@ public class Starthändelse extends Event {
      */
     public void executeEvent() {
         this.tillstånd.öppnaSnabbköp();
-        //Kund nyKund = new Kund(this.tillstånd); //Skapar en ny kund. 
         Kund nyKund = this.tillstånd.skapaKund();
 
         double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent()); //Skapar en ny ankomsstid för kunden
         this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, nyKund));
         this.eQ.addEvent(new Stängningshändelse(this.tillstånd, this.eQ, this.tillstånd.getTidentSnabbköpetStänger()));
-
     }
 
     @Override

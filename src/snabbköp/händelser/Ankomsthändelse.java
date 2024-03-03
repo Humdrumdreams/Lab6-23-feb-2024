@@ -14,22 +14,19 @@ import snabbköp.händelser.övrigt.Kund;
 public class Ankomsthändelse extends Event implements KundHändelse{
     private SnabbköpTillstånd tillstånd;
     private Kund kund;
-    private double LedT;
-
-
 
     /**
      * Skapar en ankomsthändelse med specificerat tillstånd, händelsekö, tidpunkt för händelsen och kunden.
      * 
-     * @param tillstånd Det aktuella tillståndet i snabbköpet.
-     * @param eQ Händelsekön där denna och andra händelser hanteras.
-     * @param timeOfEvent Tiden då händelsen sker.
-     * @param kund Kunden som är involverad i händelsen.
+     * @param tillstånd     Det aktuella tillståndet i snabbköpet.
+     * @param eQ            Händelsekön där denna och andra händelser hanteras.
+     * @param timeOfEvent   Tiden då händelsen sker.
+     * @param kund        Kunden som är involverad i händelsen.
      */
-    public Ankomsthändelse(SnabbköpTillstånd tillstånd, EventQueue eQ, double timeOfEvent, Kund nykund) {
+    public Ankomsthändelse(SnabbköpTillstånd tillstånd, EventQueue eQ, double timeOfEvent, Kund kund) {
         super(tillstånd, eQ, timeOfEvent);
         this.tillstånd = tillstånd;
-        this.kund = nykund;
+        this.kund = kund;
     }
 
     /**
@@ -40,10 +37,7 @@ public class Ankomsthändelse extends Event implements KundHändelse{
     public int getKundID() {
         return this.kund.getKundID();
     }
-     
 
-
-    
     /**
      * Utför ankomsthändelsen. Skapa en plocktid för kunden och skapa även en ankomsthändelse för en ny kund om snabbköpet är öppet och inte
      * är fullt. Om snabbköpet är öppet men fullt lägg till missad kund. Om snabbköpet är stängt exekviera inte ankomsthändelsen. 
@@ -51,7 +45,6 @@ public class Ankomsthändelse extends Event implements KundHändelse{
     public void executeEvent() {    	
     	if (this.tillstånd.ärSnabbköpÖppet()) { //Kollar om snabbköpet är öppet
     		this.tillstånd.ökaTotaltAntalKunderSomFörsöktHandlat();
-		    //this.tillstånd.setTotalTidLedigaKassor(this.calculateLed());
     		 //Skapa en ankomsttid för nästa kunbd
             double nästaAnkomstTid = this.tillstånd.getNästaAnkomstTid(this.getTimeOfEvent()); 
             this.eQ.addEvent(new Ankomsthändelse(this.tillstånd, this.eQ, nästaAnkomstTid, this.tillstånd.skapaKund()));
@@ -64,12 +57,8 @@ public class Ankomsthändelse extends Event implements KundHändelse{
 	            this.tillstånd.läggTillMissadKund();
             }
         }
-    }	
-        
+    }
 
- 
-    
-    
     /**
      * Returnerar namnet på händelsen, i detta fall "Ankomst".
      * 
@@ -78,10 +67,5 @@ public class Ankomsthändelse extends Event implements KundHändelse{
     @Override
     public String getName() {
         return "Ankomst";
-    }
-    private double calculateLed() {
-        double beräknat = this.eQ.getDifference() * this.tillstånd.getAntalLedigaKassor();
-        //System.out.println(this.tillstånd.getTotalTidLedigaKassor() + beräknat);
-        return this.tillstånd.getTotalTidLedigaKassor() + beräknat;
     }
 }

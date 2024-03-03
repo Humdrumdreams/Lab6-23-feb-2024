@@ -34,8 +34,6 @@ public class Stängningshändelse extends Event{
     public void executeEvent() {
         this.tillstånd.stängSnabbköp();
     }
-
-    
     @Override
     public String getName() {
         return "Stänger";

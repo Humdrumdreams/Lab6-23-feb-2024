@@ -44,19 +44,12 @@ public abstract class Sim {
         while(true) {
             if (!this.eQ.isEmpty()) {
             	Event nextEvent = this.eQ.getNextEvent();
-
-                //double currentTime = nextEvent.getTimeOfEvent(); // Get current event time
-                //double timeDifference = currentTime - lastEventTime; // Calculate time difference
-                //lastEventTime = currentTime; // Update last event time
-                //this.eQ.setDifference(timeDifference); // Set time difference to Event queue
-
                 this.state.setTime(nextEvent.getTimeOfEvent()); //Changes in state
             	if (!optimize) this.view.update(this.state, nextEvent); //Updates view
             	nextEvent.executeEvent(); //Execute the event
                 if (this.state.simulationRunning()) { //Check if the simulation is runnign
                     continue;
                 } else {
-                    //System.out.print("Simulation stopped");
                     break;
                 }
             }

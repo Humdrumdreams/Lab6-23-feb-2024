@@ -11,8 +11,6 @@ import java.util.Comparator;
  */
 public class EventQueue {
     private ArrayList<Event> eventQueue = new ArrayList<>();
-    private double difference;
-    //private double difference;
 
     /**
      * Constructs an empty event queue. No arguments are required as the constructor
@@ -44,13 +42,9 @@ public class EventQueue {
 
     /**
      * Checks if the event queue is empty.
-     *
      * @return True if the queue is empty, false otherwise.
      */
     public boolean isEmpty() {
         return this.eventQueue.isEmpty();
     }
-
-    public double getDifference() { return this.difference; }
-    public void setDifference(double value) { this.difference = value; }
 }

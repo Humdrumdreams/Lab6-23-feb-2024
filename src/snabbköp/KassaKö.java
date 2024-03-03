@@ -47,14 +47,18 @@ public class KassaKö {
     public boolean isEmpty() {
         return kö.isEmpty();
     }
-    
-  
-    
+
+    /**
+     * Skapar ett tillfälligt ArrayList för att spara kundID.
+     * <br>
+     * Används för att visa kundID i vyn, istället för kund objektet
+     * @return tempKö
+     */
     public ArrayList<Integer> SkapaTillfälligtKö() {
         ArrayList<Integer> tempKö = new ArrayList<Integer>();
 
-        for(int i = 0; i < this.kö.size(); ++i) {
-            tempKö.add(((Kund)this.kö.get(i)).getKundID());
+        for (Kund kund : this.kö) {
+            tempKö.add(((Kund) kund).getKundID());
         }
         return tempKö;
     }

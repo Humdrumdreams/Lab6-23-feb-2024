@@ -9,11 +9,19 @@ package snabbköp.händelser.övrigt;
  */
 public class Kund {
     private int kundID; // Kundens unika identifierare
-    
+
+    /**
+     * Sätter ett ID till kund
+     * @param id
+     */
     public Kund(int id) {
         this.kundID = id;
     }
 
+    /**
+     * Returnerar kundens ID
+     * @return kundID
+     */
     public int getKundID() {
         return kundID;
     }

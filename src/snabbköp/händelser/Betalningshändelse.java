@@ -32,28 +32,22 @@ public class Betalningshändelse extends Event implements KundHändelse{
     public int getKundID() {
         return this.kund.getKundID();
     }
-    
-    
+
     /**
      * Exekvierar betalningsprocessen för kunden och hanterar köhantering vid kassan.
      */
     public void executeEvent() {
-        //this.tillstånd.setTotalTidLedigaKassor(this.calculateLed());
     	this.tillstånd.ökaTotaltAntalBetaldaKunder();
         this.tillstånd.minskaAntalKunderISnabbköpet();
         if (!this.tillstånd.getKassaKö().isEmpty()) { //Kollar om kassakön är tom
             Kund nästaKund = this.tillstånd.getKassaKö().taNästaFrånKö(); //Ta nästa kund från kassan
             double betalningsTid = this.tillstånd.getNästaBetalningsTid(this.getTimeOfEvent());
             this.eQ.addEvent(new Betalningshändelse(this.tillstånd, this.eQ, betalningsTid, nästaKund));
-            this.tillstånd.minskaAntalKunderSomKöar();
         } else { //Om det inte är någon kund i kö, öka antalet lediga kassor.
             this.tillstånd.ökaAntalLedigaKassor(); 
         }
     }
 
-   
-    
-    
     /**
      * Returnerar namnet på händelsen.
      * 
@@ -62,8 +56,5 @@ public class Betalningshändelse extends Event implements KundHändelse{
     @Override
     public String getName() {
         return "Betalning";
-    }
-    private double calculateLed() {
-        return (this.tillstånd.getTotalTidLedigaKassor() + (this.eQ.getDifference() * this.tillstånd.getAntalLedigaKassor()));
     }
 }
