@@ -37,6 +37,7 @@ public class Betalningshändelse extends Event implements KundHändelse{
      * Exekvierar betalningsprocessen för kunden och hanterar köhantering vid kassan.
      */
     public void executeEvent() {
+        this.tillstånd.ökaTotaltAntalKunderSomFörsöktHandlat();
     	this.tillstånd.ökaTotaltAntalBetaldaKunder();
         this.tillstånd.minskaAntalKunderISnabbköpet();
         if (!this.tillstånd.getKassaKö().isEmpty()) { //Kollar om kassakön är tom

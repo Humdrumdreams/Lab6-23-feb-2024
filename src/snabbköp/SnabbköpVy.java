@@ -1,6 +1,6 @@
 
 package snabbköp;
-
+import java.util.Locale;
 import generellSim.Event;
 import generellSim.SimView;
 import java.util.Observable;
@@ -79,15 +79,15 @@ public class SnabbköpVy extends SimView {
      * Parametrarna inkluderar antal kassor, maximal kapacitet, ankomsthastighet, plocktider, betaltider och frö.
      * Förloppet inkluderar ordning av parametrar, som händelser och deras tidsstämplar.
      */
-    private void visaParametrar() {
-        System.out.println(String.format("""
+    private void visaParametrar() { // För att få kommaform i vyn istället för punktform, LOCALE.US
+        System.out.println(String.format(Locale.US,"""
                 PARAMETRAR
                 ==========
                 Antal kassor, N..........: %d
                 Max som ryms, M..........: %d
-                Ankomshastighet, lambda..: %.2f
-                Plocktider, [P_min..Pmax]: [%.2f..%.2f]
-                Betaltider, [K_min..Kmax]: [%.2f..%.2f]
+                Ankomshastighet, lambda..: %s
+                Plocktider, [P_min..Pmax]: [%s..%s]
+                Betaltider, [K_min..Kmax]: [%s..%s]
                 Frö, f...................: %d
                 
                 FÖRLOPP
@@ -148,15 +148,14 @@ public class SnabbköpVy extends SimView {
      */
     private void visaResultat() {
         System.out.println(String.format("""
-                Resultat
+                RESULTAT
                 ========
                 1) Av %d kunder handlade %d medan %d missades.
                 2) Total tid %d kassor varit lediga: %.2f te.
-                Genomsnittlig ledig kassatid: %.2f te (dvs %.2f%% av tiden från öppning tills 
-                sista kunden betalat).
+                Genomsnittlig ledig kassatid: %.2f te (dvs %.2f%% av tiden från öppning tills sista kunden betalat).
                 3) Total tid %d kunder tvingats köa: %.2f te.
-                Genomsnittlig kötid: %.2f te.""",
-                this.tillstånd.getTotaltAntalKunderSomFörsöktHandlat(),
+                   Genomsnittlig kötid: %.2f te.""",
+                this.tillstånd.getTotaltAntalKunderSomFörsöktHandlat() + this.tillstånd.getTotaltAntalMissadeKunder(),
                 this.tillstånd.getTotaltAntalBetaldaKunder(),
                 this.tillstånd.getTotaltAntalMissadeKunder(),
                 this.tillstånd.getMaxAntalKassor(),
